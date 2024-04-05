@@ -1,6 +1,18 @@
-:root {
-  font: 16px / 1 sans-serif;
+// bulma.io CDN
+@import 'https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css';
 
+// Load Bulma's base styles and themes (including the minireset)
+// @use "bulma/sass/base";
+// @use "bulma/sass/themes";
+
+// // Load other Bulma components
+// @use "bulma/sass/elements/button";
+// @use "bulma/sass/components/message";
+// @use "bulma/sass/elements/title";
+// // Only load the columns
+// @use "bulma/sass/grid/columns";
+
+:root {
   // SDG brand colors
   --asphalt: #2f3737;
   --bright-sky: #80ced2;

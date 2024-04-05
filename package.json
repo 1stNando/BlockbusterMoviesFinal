@@ -1,4 +1,7 @@
 {
   "name": "BlockbusterMoviesFinal",
-  "private": "true"
+  "private": "true",
+  "dependencies": {
+    "dotnet": "^1.1.4"
+  }
 }

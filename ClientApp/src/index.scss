@@ -1,5 +1,7 @@
-// bulma.io CDN
-@import 'https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css';
+// bulma.io CDN. NO LONGER needed because I installed bulma at the ClientApp via npm.
+// @import 'https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css';
+
+@import 'bulma/css/bulma.css';
 
 // Load Bulma's base styles and themes (including the minireset)
 // @use "bulma/sass/base";

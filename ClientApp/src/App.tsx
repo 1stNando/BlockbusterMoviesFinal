@@ -1,4 +1,6 @@
 import React from 'react'
+import BBVLogo from './images/BBVLogo.png'
+import { SignUp } from './pages/signup'
 
 export function App() {
   return (
@@ -6,7 +8,10 @@ export function App() {
       <section className="hero">
         <div className="hero-head">
           <div className="hero-body has-background-warning">
-            <h1 className="is-size-2 has-text-link">GeeksforGeeks</h1>
+            <div className="container">
+              <h1 className="is-size-2 has-text-link">Welcome!</h1>
+              <img className="BBVLogo2" src={BBVLogo} alt="BBVLogo" />
+            </div>
 
             <b className="is-size-4">Bulma Container overview</b>
 
@@ -25,17 +30,13 @@ export function App() {
       </section>
 
       {/* Creation of a navbar */}
-      <section className="hero is-primary is-medium">
+      <section className="hero is-link is-medium">
         <div className="hero-head">
           <nav className="navbar">
             <div className="container">
               <div className="navbar-brand">
-                <a className="navbar-item has-text-warning">
-                  Made with
-                  <img
-                    src="https://bulma.io/assets/images/bulma-type-white.png"
-                    alt="Logo"
-                  />
+                <a className="navbar-item">
+                  <img className="BBVLogo" src={BBVLogo} alt="BBVLogo" />
                 </a>
                 <span className="navbar-burger">
                   <span></span>
@@ -75,65 +76,123 @@ export function App() {
         </div>
 
         {/* //Middle section */}
-        <div className="column is-half is-offset-one-quarter">
-          <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
-            <form action="#">
-              <span className="has-text-link has-text-weight-semibold is-size-4">
-                Sign Up To Join
-              </span>
-              <h3 className="title is-4 mt-4 mb-1">Create new account</h3>
+        <SignUp />
 
-              <div className="is-relative mb-6 ">
-                <input
-                  className="input py-6 has-background-link has-text-warning is-size-3"
-                  type="name"
-                  placeholder="John Doe"
-                />
-                <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                  Name
-                </span>
-              </div>
+        {/* Table section */}
+        <table className="table">
+          <thead>
+            <tr>
+              <th>
+                <abbr title="Id">Id</abbr>
+              </th>
+              <th>Movie</th>
+              <th>
+                <abbr title="Genre">Genre</abbr>
+              </th>
+              <th>
+                <abbr title="Won">W</abbr>
+              </th>
+              <th>
+                <abbr title="Draw">D</abbr>
+              </th>
+              <th>
+                <abbr title="Lost">L</abbr>
+              </th>
+              <th>
+                <abbr title="Goals for">GF</abbr>
+              </th>
+              <th>
+                <abbr title="Goals against">GA</abbr>
+              </th>
+              <th>
+                <abbr title="Goal difference">GD</abbr>
+              </th>
+              <th>
+                <abbr title="Id">Id</abbr>
+              </th>
+              <th>Qualification or relegation</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>
+                <abbr title="Position">Pos</abbr>
+              </th>
+              <th>Team</th>
+              <th>
+                <abbr title="Played">Pld</abbr>
+              </th>
+              <th>
+                <abbr title="Won">W</abbr>
+              </th>
+              <th>
+                <abbr title="Draw">D</abbr>
+              </th>
+              <th>
+                <abbr title="Lost">L</abbr>
+              </th>
+              <th>
+                <abbr title="Goals for">GF</abbr>
+              </th>
+              <th>
+                <abbr title="Goals against">GA</abbr>
+              </th>
+              <th>
+                <abbr title="Goal difference">GD</abbr>
+              </th>
+              <th>
+                <abbr title="Points">Pts</abbr>
+              </th>
+              <th>Qualification or relegation</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <th>1</th>
+              <td>
+                <a
+                  href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
+                  title="Leicester City F.C."
+                >
+                  Leicester City F.C.
+                </a>{' '}
+                <strong>(C)</strong>
+              </td>
+              <td>38</td>
+              <td>23</td>
+              <td>12</td>
+              <td>3</td>
+              <td>65</td>
+              <td>23</td>
+              <td>82</td>
+              <td>81</td>
+              <td>
+                Qualification for the{' '}
+                <a href="">Champions League group stage</a>
+              </td>
+            </tr>
+            <tr className="is-warning">
+              <th>2</th>
+              <td>
+                <a href="">Arsenal</a>
+              </td>
+              <td>38</td>
+              <td>23</td>
+              <td>12</td>
+              <td>3</td>
+              <td>65</td>
+              <td>23</td>
+              <td>82</td>
+              <td>81</td>
+              <td>
+                Qualification for the{' '}
+                <a href="">Champions League group stage</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-              <div className="is-relative mb-6 ">
-                <input
-                  className="input py-6 has-background-link has-text-warning is-size-3"
-                  type="email"
-                  placeholder="e.g hello@xyz.com"
-                />
-                <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                  Your email address
-                </span>
-              </div>
-
-              <div className="is-relative mb-6">
-                <input
-                  className="input py-6 has-background-link has-text-warning is-size-3"
-                  type="password"
-                  placeholder="********"
-                />
-                <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                  Password
-                </span>
-              </div>
-              {/* /////end of middle section */}
-
-              <label className="is-flex mb-10">
-                <input
-                  className="mt-1"
-                  type="checkbox"
-                  name="terms"
-                  value="1"
-                />
-                <span className="is-inline-block has-text-grey-dark">
-                  By signing up, you agree to our{' '}
-                  <a href="#">Terms, Data Policy</a>
-                </span>
-              </label>
-            </form>
-          </div>
-        </div>
-
-        {/* Hero footer: will stick at the bottom */}
+        {/* Footer: will stick at the bottom */}
         <div className="hero-footer ">
           <nav className="tabs">
             <div className="column is-three-fifths is-offset-one-fifth">
@@ -149,6 +208,14 @@ export function App() {
                 </li>
                 <li>
                   <a>Elements</a>
+                </li>
+                <li>
+                  Made with
+                  <img
+                    className="BulmaLogo"
+                    src="https://bulma.io/assets/images/bulma-type-white.png"
+                    alt="Logo"
+                  />
                 </li>
               </ul>
             </div>

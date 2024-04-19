@@ -3,16 +3,12 @@
 
 @import 'bulma/css/bulma.css';
 
-// Load Bulma's base styles and themes (including the minireset)
-// @use "bulma/sass/base";
-// @use "bulma/sass/themes";
-
-// // Load other Bulma components
-// @use "bulma/sass/elements/button";
-// @use "bulma/sass/components/message";
-// @use "bulma/sass/elements/title";
-// // Only load the columns
-// @use "bulma/sass/grid/columns";
+.BBVLogo2 {
+  height: 8rem;
+}
+.BulmaLogo {
+  height: 2rem;
+}
 
 :root {
   // SDG brand colors

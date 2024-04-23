@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using BlockbusterVido.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -14,6 +15,7 @@ namespace BlockbusterMoviesFinal.Models
         private static bool LOG_SQL_STATEMENTS_IN_DEVELOPMENT = false;
 
         // Add database tables here
+        public DbSet<Movie> Movies { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

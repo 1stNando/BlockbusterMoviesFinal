@@ -78,6 +78,51 @@ export function App() {
         {/* //Middle section */}
         <SignUp />
 
+        <div className="container">
+          <div>
+            <h1 className="title has-text-centered ">
+              Results of Movies in our database
+            </h1>
+          </div>
+
+          <div className="columns is-mobile is-centered">
+            <div className="column is-5">
+              <div className="list">
+                <ul>
+                  <div className="list-item">
+                    <li>
+                      <h2>Dune: Part 2</h2>
+                      <p>
+                        <span
+                          className="stars"
+                          aria-label="Star rating of this movie is 4.7 out of 5."
+                        >
+                          Rating: 4.7 out of 5.
+                        </span>
+                        (2,188)
+                      </p>
+                    </li>
+                  </div>
+                  <div className="list-item">
+                    <li>
+                      <h2>Dune: Part 1</h2>
+                      <p>
+                        <span
+                          className="stars"
+                          aria-label="Star rating of this movie is 4.8 out of 5."
+                        >
+                          Rating: 4.8 out of 5.
+                        </span>
+                        (3,211)
+                      </p>
+                    </li>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Table section */}
         <table className="table">
           <thead>

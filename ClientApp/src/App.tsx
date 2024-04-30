@@ -1,10 +1,10 @@
 import React from 'react'
 import BBVLogo from './images/BBVLogo.png'
-import { SignUp } from './pages/signup'
+import { SignUp } from './pages/SignUp'
 
 export function App() {
   return (
-    <body>
+    <>
       <section className="hero">
         <div className="hero-head">
           <div className="hero-body has-background-warning">
@@ -123,7 +123,7 @@ export function App() {
           </div>
         </div>
 
-        {/* Table section */}
+        {/* Table of Football teams example */}
         <table className="table">
           <thead>
             <tr>
@@ -237,6 +237,23 @@ export function App() {
           </tbody>
         </table>
 
+        <div className="container">
+          <p>Dynamic render:</p>
+          {/* Dynamically render list instead! */}
+          {/* {movies.map(function (movie) {
+            return (
+              <li key={movie.id}>
+                <h2>{movie.name}</h2>
+                <p>
+                  <span area-label="Star raing of this location is ....."></span>
+                  (2,188)
+                </p>
+                <p>{movie.genre}</p>
+              </li>
+            )
+          })} */}
+        </div>
+
         {/* Footer: will stick at the bottom */}
         <div className="hero-footer ">
           <nav className="tabs">
@@ -267,6 +284,6 @@ export function App() {
           </nav>
         </div>
       </section>
-    </body>
+    </>
   )
 }

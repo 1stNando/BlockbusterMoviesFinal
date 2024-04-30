@@ -1,11 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
+
 import { App } from './App'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+
+//react-query library configuration
+//Instantiates the query client method we need to query the database using react-query library we installed.
+const queryClient = new QueryClient()
+
+const routingObject = createBrowserRouter([
+  {
+    path: '*',
+    element: <App />,
+  },
+])
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={routingObject} />
+      {/* <App /> */}
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

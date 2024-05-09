@@ -1,8 +1,35 @@
 import React from 'react'
+import { useQuery } from 'react-query'
+
 import BBVLogo from './images/BBVLogo.png'
 import { SignUp } from './pages/SignUp'
+import { MovieType } from './types'
+import { Link } from 'react-router-dom'
 
 export function App() {
+  // const [movies, setMovies] = useState([])
+
+  //NOTE: In this code const { data: restaurants = [] } = we are destructuring the return of react-query to get the data property and renaming it restaurants. This will fetch the list of movies.
+  const { data: movies = [] } = useQuery<MovieType[]>(
+    ['movies'],
+    async function () {
+      const response = await fetch('/api/movies')
+
+      // this returns the promise
+      return response.json()
+    }
+  )
+
+  console.log({ movies })
+
+  const movieFetchContent = movies.map(function (movies) {
+    return (
+      <li key={movies.id}>
+        <h2>{movies.name}</h2>
+      </li>
+    )
+  })
+
   return (
     <>
       <section className="hero">
@@ -49,6 +76,8 @@ export function App() {
                   <a className="navbar-item is-active has-text-white">Home</a>
                   <a className="navbar-item has-text-white">Examples</a>
                   <a className="navbar-item has-text-white">Documentation</a>
+                  <a className="navbar-item has-text-white">ADD A MOVIE!</a>
+                  <Link to="/new">Click to add a movie!</Link>
                   <span className="navbar-item">
                     <a className="button is-primary is-inverted">
                       <span className="icon">
@@ -62,7 +91,30 @@ export function App() {
             </div>
           </nav>
         </div>
-        {/* //end of navbar Top part */}
+        {/* //end of navbar Top part/////////////////////////////////////////////////////////// */}
+
+        <div className="container is-mobile is-centered">
+          <div className="column is-5">
+            <div className="list">
+              <div className="list-item">1 one</div>
+              <div className="list-item">
+                <p>Dynamic render:</p>
+                {movieFetchContent}
+                {/* Dynamically render list instead! */}
+                {/* <ul>
+                  {movies.map(function (movie) {
+                    return (
+                      <li key={movie.id}>
+                        <h2>{movie.name}</h2>
+                      </li>
+                    )
+                  })}
+                </ul> */}
+              </div>
+              <div className="list-item">2 two</div>
+            </div>
+          </div>
+        </div>
 
         {/* Hero content: will be in the middle */}
         <div className="hero-body mb-0 py-5">
@@ -236,23 +288,6 @@ export function App() {
             </tr>
           </tbody>
         </table>
-
-        <div className="container">
-          <p>Dynamic render:</p>
-          {/* Dynamically render list instead! */}
-          {/* {movies.map(function (movie) {
-            return (
-              <li key={movie.id}>
-                <h2>{movie.name}</h2>
-                <p>
-                  <span area-label="Star raing of this location is ....."></span>
-                  (2,188)
-                </p>
-                <p>{movie.genre}</p>
-              </li>
-            )
-          })} */}
-        </div>
 
         {/* Footer: will stick at the bottom */}
         <div className="hero-footer ">

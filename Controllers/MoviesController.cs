@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BlockbusterMoviesFinal.Models;
-using BlockbusterVido.Models;
+
 
 namespace BlockbusterMoviesFinal.Controllers
 {
@@ -34,12 +34,20 @@ namespace BlockbusterMoviesFinal.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
+            // Uses the database context in `_context` to request all of the Restaurants, sort
+            // them by row id and return them as a JSON array.
+            // return await _context.Movies.OrderBy(row => row.Id).ToListAsync();
+
             // Uses the database context in `_context` to request all of the Movies, sort
             // them by row id and return them as a JSON array.
-            return await _context.Movies.OrderBy(row => row.Id).ToListAsync();
+            return await _context.Movies.
+            OrderBy(movie => movie.Id).
+            // Include(movie => movie.Genre).
+            // Include(movie => movie.Director).
+            ToListAsync();
         }
 
-        // GET: api/Movies/5
+        // GET by id: api/Movies/5
         //
         // Fetches and returns a specific movie by finding it by id. The id is specified in the
         // URL. In the sample URL above it is the `5`.  The "{id}" in the [HttpGet("{id}")] is what tells dotnet

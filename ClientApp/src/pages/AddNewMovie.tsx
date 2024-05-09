@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { MovieType } from '../types'
+import { APIError, MovieType } from '../types'
 import { useMutation } from 'react-query'
-//import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export function NewMovie() {
-  //const history = useNavigate()
-  //const [errorMessage, setErrorMessage] = useState('')
+  const history = useNavigate()
+  const [errorMessage, setErrorMessage] = useState('')
 
   // This allows the form for a new movie to be interpreted from the user input.
   const [newMovie, setNewMovie] = useState<MovieType>({
@@ -46,17 +47,15 @@ export function NewMovie() {
   }
 
   // React-query's mutation to send a POST request to add a Movie.
-  const createNewMovie = useMutation(submitNewMovie)
-  // const createNewMovie = useMutation(submitNewMovie, {
-  //   onSuccess: function () {
-  //     history('/')
-  //   },
-  //   onError: function (apiError: APIError) {
-  //     const newMessage = Object.values(apiError.errors).join(' ')
-
-  //     setErrorMessage(newMessage)
-  //   },
-  // })
+  //const createNewMovie = useMutation(submitNewMovie)
+  const createNewMovie = useMutation(submitNewMovie, {
+    onSuccess: function () {
+      history('/')
+    },
+    onError: function (apiError: APIError) {
+      setErrorMessage(Object.values(apiError.errors).join(' '))
+    },
+  })
 
   async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     // Easy to forget, but important to have this preventDefault() for the form to submit properly to the api function.
@@ -68,15 +67,26 @@ export function NewMovie() {
   return (
     <>
       <div className="container">
+        <div id="navbarMenuHeroA" className="navbar-menu">
+          <div className="navbar-end">
+            <div>
+              <a className="navbar-item is-active has-text-white">Home</a>
+              <Link to="*">Click to go back HOME</Link>
+            </div>
+          </div>
+        </div>
         <p>Hello!</p>
         <div className="column is-half">
           <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
             <div className="is-relative mb-6">
               <form onSubmit={handleFormSubmit}>
+                {errorMessage ? (
+                  <p className="form-error">{errorMessage}</p>
+                ) : null}
                 <h1 className="title is-4 mt-4 mb-1">
                   Add a new movie to the database
                 </h1>
-                <div className="is-relative mb-6">
+                <div className="is-relative">
                   <p className="form-input">
                     <label htmlFor="director">
                       <h1 className="title">Director</h1>

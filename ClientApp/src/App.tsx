@@ -3,8 +3,10 @@ import { useQuery } from 'react-query'
 
 import BBVLogo from './images/BBVLogo.png'
 import { SignUp } from './pages/SignUp'
-import { MovieType } from './types'
+import { MovieClassType, MovieType } from './types'
 import { Link } from 'react-router-dom'
+import { SingleMovieFromList } from './components/SingleMovieFromList'
+// import { SingleMovieFromList } from './components/SingleMovieFromList'
 
 export function App() {
   // const [movies, setMovies] = useState([])
@@ -22,17 +24,19 @@ export function App() {
 
   console.log({ movies })
 
-  const movieFetchContent = movies.map(function (movies) {
-    return (
-      <li key={movies.id}>
-        <h2>{movies.name}</h2>
-      </li>
-    )
-  })
+  const { data: movieClasses = [] } = useQuery<MovieClassType[]>(
+    ['movieClasses'],
+    async function () {
+      const response = await fetch('/api/movieClasses')
+
+      return response.json()
+    }
+  )
+  //const [movieClasses, setMovieClasses] = useState([])
 
   return (
     <>
-      <section className="hero">
+      <section className="hero is-small">
         <div className="hero-head">
           <div className="hero-body has-background-warning">
             <div className="container">
@@ -76,8 +80,10 @@ export function App() {
                   <a className="navbar-item is-active has-text-white">Home</a>
                   <a className="navbar-item has-text-white">Examples</a>
                   <a className="navbar-item has-text-white">Documentation</a>
-                  <a className="navbar-item has-text-white">ADD A MOVIE!</a>
-                  <Link to="/new">Click to add a movie!</Link>
+
+                  <Link className="navbar-item has-text-white" to="/new">
+                    ADD A MOVIE
+                  </Link>
                   <span className="navbar-item">
                     <a className="button is-primary is-inverted">
                       <span className="icon">
@@ -98,8 +104,9 @@ export function App() {
             <div className="list">
               <div className="list-item">1 one</div>
               <div className="list-item">
-                <p>Dynamic render:</p>
-                {movieFetchContent}
+                <p>Dynamic render: </p>
+
+                {/* {movieFetchContent} */}
                 {/* Dynamically render list instead! */}
                 {/* <ul>
                   {movies.map(function (movie) {
@@ -110,6 +117,11 @@ export function App() {
                     )
                   })}
                 </ul> */}
+                <ul>
+                  {movies.map(function (movie) {
+                    return <SingleMovieFromList key={movie.id} movie={movie} />
+                  })}
+                </ul>
               </div>
               <div className="list-item">2 two</div>
             </div>
@@ -176,118 +188,82 @@ export function App() {
         </div>
 
         {/* Table of Football teams example */}
-        <table className="table">
-          <thead>
-            <tr>
-              <th>
-                <abbr title="Id">Id</abbr>
-              </th>
-              <th>Movie</th>
-              <th>
-                <abbr title="Genre">Genre</abbr>
-              </th>
-              <th>
-                <abbr title="Won">W</abbr>
-              </th>
-              <th>
-                <abbr title="Draw">D</abbr>
-              </th>
-              <th>
-                <abbr title="Lost">L</abbr>
-              </th>
-              <th>
-                <abbr title="Goals for">GF</abbr>
-              </th>
-              <th>
-                <abbr title="Goals against">GA</abbr>
-              </th>
-              <th>
-                <abbr title="Goal difference">GD</abbr>
-              </th>
-              <th>
-                <abbr title="Id">Id</abbr>
-              </th>
-              <th>Qualification or relegation</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <th>
-                <abbr title="Position">Pos</abbr>
-              </th>
-              <th>Team</th>
-              <th>
-                <abbr title="Played">Pld</abbr>
-              </th>
-              <th>
-                <abbr title="Won">W</abbr>
-              </th>
-              <th>
-                <abbr title="Draw">D</abbr>
-              </th>
-              <th>
-                <abbr title="Lost">L</abbr>
-              </th>
-              <th>
-                <abbr title="Goals for">GF</abbr>
-              </th>
-              <th>
-                <abbr title="Goals against">GA</abbr>
-              </th>
-              <th>
-                <abbr title="Goal difference">GD</abbr>
-              </th>
-              <th>
-                <abbr title="Points">Pts</abbr>
-              </th>
-              <th>Qualification or relegation</th>
-            </tr>
-          </tfoot>
-          <tbody>
-            <tr>
-              <th>1</th>
-              <td>
-                <a
-                  href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
-                  title="Leicester City F.C."
-                >
-                  Leicester City F.C.
-                </a>{' '}
-                <strong>(C)</strong>
-              </td>
-              <td>38</td>
-              <td>23</td>
-              <td>12</td>
-              <td>3</td>
-              <td>65</td>
-              <td>23</td>
-              <td>82</td>
-              <td>81</td>
-              <td>
-                Qualification for the{' '}
-                <a href="">Champions League group stage</a>
-              </td>
-            </tr>
-            <tr className="is-warning">
-              <th>2</th>
-              <td>
-                <a href="">Arsenal</a>
-              </td>
-              <td>38</td>
-              <td>23</td>
-              <td>12</td>
-              <td>3</td>
-              <td>65</td>
-              <td>23</td>
-              <td>82</td>
-              <td>81</td>
-              <td>
-                Qualification for the{' '}
-                <a href="">Champions League group stage</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="columns is-centered ">
+          <div className="column is-6">
+            <div className="container is-mobile is-centered">
+              <table className="table ">
+                <thead>
+                  <tr>
+                    <th>
+                      <abbr title="Id">Id</abbr>
+                    </th>
+                    <th>Movie</th>
+                    <th>
+                      <abbr title="director">Director</abbr>
+                    </th>
+                    <th>
+                      <abbr title="genre">Genre</abbr>
+                    </th>
+                    <th>
+                      <abbr title="name">Name</abbr>
+                    </th>
+                    <th>
+                      <abbr title="releaseDate">Release date</abbr>
+                    </th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>
+                      <abbr title="id">Id</abbr>
+                    </th>
+                    <th>Movie</th>
+                    <th>
+                      <abbr title="genre">Genre</abbr>
+                    </th>
+                    <th>
+                      <abbr title="Won">W</abbr>
+                    </th>
+                    <th>
+                      <abbr title="Draw">D</abbr>
+                    </th>
+                    <th>
+                      <abbr title="Lost">L</abbr>
+                    </th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr>
+                    <th>1</th>
+                    <td>
+                      <a
+                        href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
+                        title="Leicester City F.C."
+                      >
+                        Leicester City F.C.
+                      </a>{' '}
+                      <strong>(C)</strong>
+                    </td>
+                    <td>38</td>
+                    <td>23</td>
+                    <td>12</td>
+                    <td>3</td>
+                  </tr>
+                  <tr className="is-warning">
+                    <th>2</th>
+                    <td>
+                      <a href="">Arsenal</a>
+                    </td>
+                    <td>38</td>
+                    <td>23</td>
+                    <td>12</td>
+                    <td>3</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
         {/* Footer: will stick at the bottom */}
         <div className="hero-footer ">

@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using BlockbusterMoviesFinal.Models;
 
 
 namespace BlockbusterMoviesFinal.Models

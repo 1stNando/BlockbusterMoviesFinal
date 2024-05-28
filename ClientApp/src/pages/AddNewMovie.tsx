@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 export function NewMovie() {
+  // This is the id used to fetch the data for one Movie
+  //const { id } = useParams<{ id: string }>()
+
   const history = useNavigate()
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -66,114 +69,89 @@ export function NewMovie() {
 
   return (
     <>
-      <div className="container">
-        <div id="navbarMenuHeroA" className="navbar-menu">
-          <div className="navbar-end">
-            <div>
-              <a className="navbar-item is-active has-text-white">Home</a>
-              <Link to="*">Click to go back HOME</Link>
+      <div className="container is-mobile is-centered">
+        <div className="column is-5">
+          <div id="navbarMenuHeroA" className="navbar-menu">
+            <div className="navbar-end">
+              <div>
+                <a className="navbar-item is-active has-text-white">Home</a>
+                <Link to="*">Click to go back HOME</Link>
+              </div>
             </div>
           </div>
-        </div>
-        <p>Hello!</p>
-        <div className="column is-half">
-          <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
-            <div className="is-relative mb-6">
-              <form onSubmit={handleFormSubmit}>
-                {errorMessage ? (
-                  <p className="form-error">{errorMessage}</p>
-                ) : null}
-                <h1 className="title is-4 mt-4 mb-1">
-                  Add a new movie to the database
-                </h1>
-                <div className="is-relative">
+          <p>Hello!</p>
+          <div className="column">
+            <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
+              <div className="is-relative mb-6">
+                <form onSubmit={handleFormSubmit}>
+                  {errorMessage ? (
+                    <p className="form-error">{errorMessage}</p>
+                  ) : null}
+                  <h1 className="title is-4 mt-4 mb-1">
+                    Add a new movie to the database
+                  </h1>
+                  <div className="is-relative">
+                    <p className="form-input">
+                      <label htmlFor="director">
+                        <h1 className="title">Director</h1>
+                      </label>
+                      <input
+                        className="input py-6 has-background-link has-text-warning is-size-3"
+                        type="text"
+                        name="director"
+                        value={newMovie.director}
+                        onChange={handleStringFieldChange}
+                      />
+                    </p>
+                  </div>
+
                   <p className="form-input">
-                    <label htmlFor="director">
-                      <h1 className="title">Director</h1>
+                    <label htmlFor="genre">
+                      <h1 className="title">Genre</h1>
+                    </label>
+                    <input
+                      className="input py-6 has-background-link has-text-warning is-size-3"
+                      name="genre"
+                      value={newMovie.genre}
+                      onChange={handleStringFieldChange}
+                    ></input>
+                  </p>
+                  <p className="form-input">
+                    <label htmlFor="name">
+                      <h1 className="title">Name</h1>
                     </label>
                     <input
                       className="input py-6 has-background-link has-text-warning is-size-3"
                       type="text"
-                      name="director"
-                      value={newMovie.director}
+                      name="name"
+                      value={newMovie.name}
                       onChange={handleStringFieldChange}
                     />
                   </p>
-                </div>
+                  <p className="form-input">
+                    <label htmlFor="releaseDate">
+                      <h1 className="title">Release Date</h1>
+                    </label>
+                    <input
+                      className="input py-6 has-background-link has-text-warning is-size-3"
+                      type="text"
+                      name="releaseDate"
+                      value={newMovie.releaseDate}
+                      onChange={handleStringFieldChange}
+                    />
+                  </p>
+                  <p>
+                    <input
+                      className="button mt-5 py-7 has-background-link has-text-warning is-size-4"
+                      type="submit"
+                      value="Submit"
+                    />
+                  </p>
+                </form>
+              </div>
 
-                <p className="form-input">
-                  <label htmlFor="genre">
-                    <h1 className="title">Genre</h1>
-                  </label>
-                  <input
-                    className="input py-6 has-background-link has-text-warning is-size-3"
-                    name="genre"
-                    value={newMovie.genre}
-                    onChange={handleStringFieldChange}
-                  ></input>
-                </p>
-                <p className="form-input">
-                  <label htmlFor="name">
-                    <h1 className="title">Name</h1>
-                  </label>
-                  <input
-                    className="input py-6 has-background-link has-text-warning is-size-3"
-                    type="text"
-                    name="name"
-                    value={newMovie.name}
-                    onChange={handleStringFieldChange}
-                  />
-                </p>
-                <p className="form-input">
-                  <label htmlFor="releaseDate">
-                    <h1 className="title">Release Date</h1>
-                  </label>
-                  <input
-                    className="input py-6 has-background-link has-text-warning is-size-3"
-                    type="text"
-                    name="releaseDate"
-                    value={newMovie.releaseDate}
-                    onChange={handleStringFieldChange}
-                  />
-                </p>
-                <p>
-                  <input
-                    className="button mt-5 py-7 has-background-link has-text-warning is-size-4"
-                    type="submit"
-                    value="Submit"
-                  />
-                </p>
-              </form>
+              {/* spacer */}
             </div>
-
-            {/* spacer */}
-            <form action="#">
-              <h1 className="title is-4 mt-4 mb-1">
-                Add a new movie to the database
-              </h1>
-
-              <div className="is-relative mb-6 ">
-                <input
-                  className="input py-6 has-background-link has-text-warning is-size-3"
-                  type="name"
-                  placeholder="Movie Title"
-                />
-                <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                  Name
-                </span>
-              </div>
-
-              <div className="is-relative mb-6 ">
-                <input
-                  className="input py-6 has-background-link has-text-warning is-size-3"
-                  type="Director"
-                  placeholder="S. Spielberg"
-                />
-                <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                  Director Name
-                </span>
-              </div>
-            </form>
           </div>
         </div>
       </div>

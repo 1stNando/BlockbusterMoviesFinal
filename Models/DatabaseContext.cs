@@ -18,6 +18,8 @@ namespace BlockbusterMoviesFinal.Models
         // Add database tables here!!!
         public DbSet<Movie> Movies { get; set; }
 
+        public DbSet<MovieClass> MovieClasses { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

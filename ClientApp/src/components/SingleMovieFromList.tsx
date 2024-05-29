@@ -8,8 +8,12 @@ type SingleMovieFromListProps = {
 // This page is like an intermediary between the MAIN landing page and the detail specific "Movie" single view page.
 export function SingleMovieFromList(props: SingleMovieFromListProps) {
   return (
-    <li key={props.movie.id}>
-      <h2>Name of movie: {props.movie.name}</h2>
-    </li>
+    <ul>
+      <div className="list-item">
+        <li key={props.movie.id}>
+          <h2>Title: {props.movie.name}</h2>
+        </li>
+      </div>
+    </ul>
   )
 }

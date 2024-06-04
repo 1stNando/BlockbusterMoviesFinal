@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 
 import BBVLogo from './images/BBVLogo.png'
 import { SignUp } from './pages/SignUp'
-import { MovieClassType, MovieType } from './types'
+import { MovieType } from './types'
 import { Link } from 'react-router-dom'
 import { SingleMovieFromList } from './components/SingleMovieFromList'
 // import { SingleMovieFromList } from './components/SingleMovieFromList'
@@ -24,14 +24,14 @@ export function App() {
 
   console.log({ movies })
 
-  const { data: movieClasses = [] } = useQuery<MovieClassType[]>(
-    ['movieClasses'],
-    async function () {
-      const response = await fetch('/api/movieClasses')
+  // const { data: movieClasses = [] } = useQuery<MovieClassType[]>(
+  //   ['movieClasses'],
+  //   async function () {
+  //     const response = await fetch('/api/movieClasses')
 
-      return response.json()
-    }
-  )
+  //     return response.json()
+  //   }
+  // )
   //const [movieClasses, setMovieClasses] = useState([])
 
   return (
@@ -384,6 +384,68 @@ export function App() {
             <article className="tile is-child box">
               <p className="title">Tile 5</p>
               <p className="subtitle">Subtitle</p>
+            </article>
+          </div>
+        </div>
+
+        {/* Best practices for Nesting Layout Components */}
+        <section className="hero is-info is-small">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">Welcome to the Website</h1>
+              <h2 className="subtitle">Your success is our priority</h2>
+            </div>
+          </div>
+        </section>
+        {/* 4. Level for Horizontal Content Distribution: Use the level component for simple horizontal alignment of items. */}
+        <nav className="level">
+          <div className="level-item has-text-centered">
+            <p className="title">123</p>
+            <p className="heading">Items</p>
+          </div>
+          <div className="level-item has-text-centered">
+            <p className="title">456</p>
+            <p className="heading">Followers</p>
+          </div>
+        </nav>
+        <section className="section">
+          <div className="container">
+            <div className="columns">
+              <div className="column">Column 1</div>
+              <div className="column">Column 2</div>
+              <div className="column">Column 3</div>
+            </div>
+          </div>
+        </section>
+      </section>
+      {/* Tile for Complex Layouts: Use tiles when you need to create complex, nested layouts with multiple levels of content. */}
+      <section>
+        <div className="tile is-ancestor">
+          <div className="tile is-vertical is-8">
+            <div className="tile">
+              <div className="tile is-parent is-vertical">
+                <article className="tile is-child box">
+                  <p className="title">Vertical Tile 1</p>
+                </article>
+                <article className="tile is-child box">
+                  <p className="title">Vertical Tile 2</p>
+                </article>
+              </div>
+              <div className="tile is-parent">
+                <article className="tile is-child box">
+                  <p className="title">Horizontal Tile</p>
+                </article>
+              </div>
+            </div>
+            <div className="tile is-parent">
+              <article className="tile is-child box">
+                <p className="title">Full Width Tile</p>
+              </article>
+            </div>
+          </div>
+          <div className="tile is-parent">
+            <article className="tile is-child box">
+              <p className="title">Side Tile</p>
             </article>
           </div>
         </div>

@@ -3,36 +3,22 @@ import { useQuery } from 'react-query'
 
 import BBVLogo from './images/BBVLogo.png'
 import { SignUp } from './pages/SignUp'
-import { MovieType } from './types'
+import { MovieClassType } from './types'
 import { Link } from 'react-router-dom'
-import { SingleMovieFromList } from './components/SingleMovieFromList'
 // import { SingleMovieFromList } from './components/SingleMovieFromList'
+// import { SingleMovieClassFromList } from './components/SingleMovieClassFromList'
 
 export function App() {
-  // const [movies, setMovies] = useState([])
-
-  //NOTE: In this code const { data: restaurants = [] } = we are destructuring the return of react-query to get the data property and renaming it restaurants. This will fetch the list of movies.
-  const { data: movies = [] } = useQuery<MovieType[]>(
-    ['movies'],
+  //NOTE: In this code const { data: movies2 = [] } = we are destructuring the return of react-query to get the data property and renaming it movies2. This will fetch the list of movies.
+  const { data: movies2 = [] } = useQuery<MovieClassType[]>(
+    ['movies2'],
     async function () {
-      const response = await fetch('/api/movies')
-
-      // this returns the promise
+      const response = await fetch('/api/movieclasses')
       return response.json()
     }
   )
 
-  console.log({ movies })
-
-  // const { data: movieClasses = [] } = useQuery<MovieClassType[]>(
-  //   ['movieClasses'],
-  //   async function () {
-  //     const response = await fetch('/api/movieClasses')
-
-  //     return response.json()
-  //   }
-  // )
-  //const [movieClasses, setMovieClasses] = useState([])
+  console.log({ movies2 })
 
   return (
     <>
@@ -95,46 +81,85 @@ export function App() {
         </div>
         {/* //end of navbar Top part/////////////////////////////////////////////////////////// */}
         <div className="container">
-          <div>
-            <h1 className="title has-text-centered ">
-              Results of Movies in our database
-            </h1>
-          </div>
-
-          <div className="columns is-mobile is-centered">
-            <div className="column is-5">
-              <div className="list">
-                <ul>
-                  <div className="list-item">
-                    <li>
-                      <h2>Dune: Part 2</h2>
-                      <p>
-                        <span
-                          className="stars"
-                          aria-label="Star rating of this movie is 4.7 out of 5."
-                        >
-                          Rating: 4.7 out of 5.
-                        </span>
-                        (2,188)
-                      </p>
-                    </li>
+          <section className="section">
+            <div>
+              <h1 className="title has-text-centered ">
+                Results of Movies in our database
+              </h1>
+            </div>
+            <div className="container">
+              {/* Table of Football teams example */}
+              <div className="columns is-centered ">
+                <div className="column is-7">
+                  <div className="container is-mobile is-centered">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>
+                            <abbr title="Id">Id</abbr>
+                          </th>
+                          <th>
+                            <abbr title="Movie">Movie</abbr>
+                          </th>
+                          <th>
+                            <abbr title="Director">Director</abbr>
+                          </th>
+                          <th>
+                            <abbr title="Genre">Genre</abbr>
+                          </th>
+                          <th>
+                            <abbr title="Name">Name</abbr>
+                          </th>
+                          <th>
+                            <abbr title="Release Date">Release Date</abbr>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {movies2.map((movie, index) => (
+                          <tr
+                            key={index}
+                            className={index % 2 === 1 ? 'is-warning' : ''}
+                          >
+                            <th>{movie.id}</th>
+                            <td>
+                              <strong>{movie.id}</strong>
+                            </td>
+                            <td>{movie.director}</td>
+                            <td>{movie.genre}</td>
+                            <td>{movie.title}</td>
+                            <td>{movie.releaseDate}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>
+                            <abbr title="Id">Id</abbr>
+                          </th>
+                          <th>Movie</th>
+                          <th>
+                            <abbr title="Director">Director</abbr>
+                          </th>
+                          <th>
+                            <abbr title="Genre">Genre</abbr>
+                          </th>
+                          <th>
+                            <abbr title="Name">Name</abbr>
+                          </th>
+                          <th>
+                            <abbr title="Release Date">Release Date</abbr>
+                          </th>
+                        </tr>
+                      </tfoot>
+                    </table>
                   </div>
-                </ul>
+                </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
         {/* ///////////////////////////////////////////////////////////////// */}
-        <div className="container"></div>
-        <div className="columns is-mobile is-centered">
-          <div className="column is-5">
-            <div className="list">
-              {movies.map(function (movie) {
-                return <SingleMovieFromList key={movie.id} movie={movie} />
-              })}
-            </div>
-          </div>
-        </div>
 
         {/* Hero content: will be in the middle */}
         <div className="hero-body mb-0 py-5">
@@ -149,86 +174,6 @@ export function App() {
 
         {/* //Middle section */}
         <SignUp />
-
-        {/* Table of Football teams example */}
-        <div className="columns is-centered ">
-          <div className="column is-6">
-            <div className="container is-mobile is-centered">
-              <table className="table ">
-                <thead>
-                  <tr>
-                    <th>
-                      <abbr title="Id">Id</abbr>
-                    </th>
-                    <th>
-                      <abbr title="Movie">Movie</abbr>
-                    </th>
-                    <th>
-                      <abbr title="director">Director</abbr>
-                    </th>
-                    <th>
-                      <abbr title="genre">Genre</abbr>
-                    </th>
-                    <th>
-                      <abbr title="name">Name</abbr>
-                    </th>
-                    <th>
-                      <abbr title="releaseDate">Release date</abbr>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th>1</th>
-                    <td>
-                      <a
-                        href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
-                        title="Leicester City F.C."
-                      >
-                        Leicester City F.C.
-                      </a>{' '}
-                      <strong>(C)</strong>
-                    </td>
-                    <td>38</td>
-                    <td>23</td>
-                    <td>12</td>
-                    <td>3</td>
-                  </tr>
-                  <tr className="is-warning">
-                    <th>2</th>
-                    <td>
-                      <a href="">Arsenal</a>
-                    </td>
-                    <td>38</td>
-                    <td>23</td>
-                    <td>12</td>
-                    <td>3</td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th>
-                      <abbr title="id">Id</abbr>
-                    </th>
-                    <th>Movie</th>
-                    <th>
-                      <abbr title="genre">Genre</abbr>
-                    </th>
-                    <th>
-                      <abbr title="Won">W</abbr>
-                    </th>
-                    <th>
-                      <abbr title="Draw">D</abbr>
-                    </th>
-                    <th>
-                      <abbr title="Lost">L</abbr>
-                    </th>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-          </div>
-        </div>
 
         {/* Footer: will stick at the bottom */}
         <div className="hero-footer ">
@@ -280,6 +225,9 @@ export function App() {
           <h1 className="title">Section Title</h1>
           <p>This content is centered and has a maximum width.</p>
         </div>
+        <span>
+          <br />
+        </span>
         {/* 3. Columns
 
         Columns are part of Bulma's grid system
@@ -290,6 +238,7 @@ export function App() {
             Usage: Use columns inside sections or containers to 
             organize content into multiple columns. */}
         <div className="container">
+          <p className="title">Title of column </p>
           <div className="columns">
             <div className="column">
               <div className="box">Column 1</div>
@@ -298,10 +247,13 @@ export function App() {
               <div className="box">Column 2</div>
             </div>
             <div className="column">
-              <div className="box">Column3</div>
+              <div className="box">Column3333</div>
             </div>
           </div>
         </div>
+        <span>
+          <br />
+        </span>
         {/* 5. Level The Level component is a simple, horizontal flexbox container
         for aligning items side-by-side. It's particularly useful for small,
         evenly spaced horizontal content. 
@@ -352,41 +304,6 @@ export function App() {
             </article>
           </div>
         </div>
-        {/* Nested Tiles */}
-        <div className="tile is-ancestor">
-          <div className="tile is-vertical is-8">
-            <div className="tile">
-              <div className="tile is-parent is-vertical">
-                <article className="tile is-child box">
-                  <p className="title">Tile 1</p>
-                  <p className="subtitle">Subtitle</p>
-                </article>
-                <article className="tile is-child box">
-                  <p className="title">Tile 2</p>
-                  <p className="subtitle">Subtitle</p>
-                </article>
-              </div>
-              <div className="tile is-parent">
-                <article className="tile is-child box">
-                  <p className="title">Tile 3</p>
-                  <p className="subtitle">Subtitle</p>
-                </article>
-              </div>
-            </div>
-            <div className="tile is-parent">
-              <article className="tile is-child box">
-                <p className="title">Tile 4</p>
-                <p className="subtitle">Subtitle</p>
-              </article>
-            </div>
-          </div>
-          <div className="tile is-parent">
-            <article className="tile is-child box">
-              <p className="title">Tile 5</p>
-              <p className="subtitle">Subtitle</p>
-            </article>
-          </div>
-        </div>
 
         {/* Best practices for Nesting Layout Components */}
         <section className="hero is-info is-small">
@@ -408,47 +325,6 @@ export function App() {
             <p className="heading">Followers</p>
           </div>
         </nav>
-        <section className="section">
-          <div className="container">
-            <div className="columns">
-              <div className="column">Column 1</div>
-              <div className="column">Column 2</div>
-              <div className="column">Column 3</div>
-            </div>
-          </div>
-        </section>
-      </section>
-      {/* Tile for Complex Layouts: Use tiles when you need to create complex, nested layouts with multiple levels of content. */}
-      <section>
-        <div className="tile is-ancestor">
-          <div className="tile is-vertical is-8">
-            <div className="tile">
-              <div className="tile is-parent is-vertical">
-                <article className="tile is-child box">
-                  <p className="title">Vertical Tile 1</p>
-                </article>
-                <article className="tile is-child box">
-                  <p className="title">Vertical Tile 2</p>
-                </article>
-              </div>
-              <div className="tile is-parent">
-                <article className="tile is-child box">
-                  <p className="title">Horizontal Tile</p>
-                </article>
-              </div>
-            </div>
-            <div className="tile is-parent">
-              <article className="tile is-child box">
-                <p className="title">Full Width Tile</p>
-              </article>
-            </div>
-          </div>
-          <div className="tile is-parent">
-            <article className="tile is-child box">
-              <p className="title">Side Tile</p>
-            </article>
-          </div>
-        </div>
       </section>
     </>
   )

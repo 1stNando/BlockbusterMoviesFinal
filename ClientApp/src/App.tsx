@@ -84,20 +84,18 @@ export function App() {
           <section className="section">
             <div>
               <h1 className="title has-text-centered ">
-                Results of Movies in our database
+                Results of Movies in our database{' '}
+                <i className="fa-brands fa-font-awesome"></i>
               </h1>
             </div>
             <div className="container">
-              {/* Table of Football teams example */}
+              {/* Table  */}
               <div className="columns is-centered ">
                 <div className="column is-7">
                   <div className="container is-mobile is-centered">
                     <table className="table">
                       <thead>
                         <tr>
-                          <th>
-                            <abbr title="Id">Id</abbr>
-                          </th>
                           <th>
                             <abbr title="Movie">Movie</abbr>
                           </th>
@@ -121,7 +119,6 @@ export function App() {
                             key={index}
                             className={index % 2 === 1 ? 'is-warning' : ''}
                           >
-                            <th>{movie.id}</th>
                             <td>
                               <strong>{movie.id}</strong>
                             </td>

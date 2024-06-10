@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 // import { SingleMovieClassFromList } from './components/SingleMovieClassFromList'
 
 export function App() {
-  //NOTE: In this code const { data: movies2 = [] } = we are destructuring the return of react-query to get the data property and renaming it movies2. This will fetch the list of movies.
+  //NOTE: In this code const { data: movies2 = [] } = we are destructuring the return of react-query to get the data property and renaming it movies2. This will fetch the list of movies. Using react-query library to integrate with our backend API.
   const { data: movies2 = [] } = useQuery<MovieClassType[]>(
     ['movies2'],
     async function () {
@@ -131,9 +131,6 @@ export function App() {
                       </tbody>
                       <tfoot>
                         <tr>
-                          <th>
-                            <abbr title="Id">Id</abbr>
-                          </th>
                           <th>Movie</th>
                           <th>
                             <abbr title="Director">Director</abbr>
@@ -181,7 +178,12 @@ export function App() {
                   <a>Overview</a>
                 </li>
                 <li>
-                  <a>Modifiers</a>
+                  <a>
+                    Github{' '}
+                    <span className="icon">
+                      <i className="fab fa-github"></i>
+                    </span>
+                  </a>
                 </li>
                 <li>
                   <a>Grid</a>

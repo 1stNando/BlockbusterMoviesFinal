@@ -5,6 +5,7 @@ import BBVLogo from './images/BBVLogo.png'
 import { SignUp } from './pages/SignUp'
 import { MovieClassType } from './types'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 // import { SingleMovieFromList } from './components/SingleMovieFromList'
 // import { SingleMovieClassFromList } from './components/SingleMovieClassFromList'
 
@@ -19,6 +20,16 @@ export function App() {
   )
 
   console.log({ movies2 })
+  // State for the search text
+  const [searchText, setSearchText] = useState('')
+  // Function to filter movies based on search text
+  const filteredMovies2 = movies2.filter(
+    (movie) =>
+      movie.title.toLowerCase().includes(searchText.toLowerCase()) ||
+      movie.director.toLowerCase().includes(searchText.toLowerCase()) ||
+      movie.genre.toLowerCase().includes(searchText.toLowerCase()) ||
+      movie.releaseDate.toLowerCase().includes(searchText.toLowerCase())
+  )
 
   return (
     <>
@@ -74,6 +85,17 @@ export function App() {
                       <span>Download</span>
                     </a>
                   </span>
+                  <span className="navbar-item">
+                    {/* Search input for table */}
+                    <form className="search">
+                      <input
+                        type="text"
+                        placeholder="Search database..."
+                        value={searchText}
+                        onChange={(event) => setSearchText(event.target.value)}
+                      />
+                    </form>
+                  </span>
                 </div>
               </div>
             </div>
@@ -100,6 +122,9 @@ export function App() {
                             <abbr title="Movie">Movie</abbr>
                           </th>
                           <th>
+                            <abbr title="Title">Title</abbr>
+                          </th>
+                          <th>
                             <abbr title="Director">Director</abbr>
                           </th>
                           <th>
@@ -114,7 +139,7 @@ export function App() {
                         </tr>
                       </thead>
                       <tbody>
-                        {movies2.map((movie, index) => (
+                        {filteredMovies2.map((movie, index) => (
                           <tr
                             key={index}
                             className={index % 2 === 1 ? 'is-warning' : ''}
@@ -122,6 +147,7 @@ export function App() {
                             <td>
                               <strong>{movie.id}</strong>
                             </td>
+                            <td>{movie.title}</td>
                             <td>{movie.director}</td>
                             <td>{movie.genre}</td>
                             <td>{movie.title}</td>
@@ -134,6 +160,9 @@ export function App() {
                           <th>Movie</th>
                           <th>
                             <abbr title="Director">Director</abbr>
+                          </th>
+                          <th>
+                            <abbr title="Title">Title</abbr>
                           </th>
                           <th>
                             <abbr title="Genre">Genre</abbr>

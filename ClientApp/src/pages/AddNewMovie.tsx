@@ -64,6 +64,13 @@ export function NewMovie() {
     // Easy to forget, but important to have this preventDefault() for the form to submit properly to the api function.
     event.preventDefault()
 
+    // Date validation, this check is added to ensure the date is not in the future.
+    const currentDate = new Date().toISOString().split('T')[0]
+    if (newMovie.releaseDate > currentDate) {
+      setErrorMessage('The release date cannot be in the future.')
+      return
+    }
+
     createNewMovie.mutate(newMovie)
   }
 
@@ -79,7 +86,7 @@ export function NewMovie() {
               </div>
             </div>
           </div>
-          <p>Hello!</p>
+
           <div className="column">
             <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
               <div className="is-relative mb-6">
@@ -139,7 +146,7 @@ export function NewMovie() {
                     </label>
                     <input
                       className="input py-6 has-background-link has-text-warning is-size-3"
-                      type="text"
+                      type="date"
                       name="releaseDate"
                       value={newMovie.releaseDate}
                       onChange={handleStringFieldChange}

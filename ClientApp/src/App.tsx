@@ -62,11 +62,6 @@ export function App() {
                 <a className="navbar-item">
                   <img className="BBVLogo" src={BBVLogo} alt="BBVLogo" />
                 </a>
-                <span className="navbar-burger">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
               </div>
               <div id="navbarMenuHeroA" className="navbar-menu">
                 <div className="navbar-end">

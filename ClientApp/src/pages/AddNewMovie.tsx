@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { APIError, MovieType } from '../types'
+import { APIError, MovieClassType } from '../types'
 import { useMutation } from 'react-query'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
@@ -12,11 +12,11 @@ export function NewMovie() {
   const [errorMessage, setErrorMessage] = useState('')
 
   // This allows the form for a new movie to be interpreted from the user input.
-  const [newMovie, setNewMovie] = useState<MovieType>({
+  const [newMovie, setNewMovie] = useState<MovieClassType>({
     id: undefined,
     director: '',
     genre: '',
-    name: '',
+    title: '',
     releaseDate: '',
   })
 
@@ -35,8 +35,8 @@ export function NewMovie() {
   }
 
   // POST create a new movie API
-  async function submitNewMovie(movieToCreate: MovieType) {
-    const response = await fetch('/api/Movies', {
+  async function submitNewMovie(movieToCreate: MovieClassType) {
+    const response = await fetch('/api/movieclasses', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(movieToCreate),
@@ -91,9 +91,9 @@ export function NewMovie() {
                     Add a new movie to the database
                   </h1>
                   <div className="is-relative">
-                    <p className="form-input">
+                    <div className="form-input">
                       <label htmlFor="director">
-                        <h1 className="title">Director</h1>
+                        <div className="title">Director</div>
                       </label>
                       <input
                         className="input py-6 has-background-link has-text-warning is-size-3"
@@ -102,35 +102,40 @@ export function NewMovie() {
                         value={newMovie.director}
                         onChange={handleStringFieldChange}
                       />
-                    </p>
+                    </div>
                   </div>
 
-                  <p className="form-input">
+                  <div className="form-input">
                     <label htmlFor="genre">
-                      <h1 className="title">Genre</h1>
-                    </label>
-                    <input
-                      className="input py-6 has-background-link has-text-warning is-size-3"
-                      name="genre"
-                      value={newMovie.genre}
-                      onChange={handleStringFieldChange}
-                    ></input>
-                  </p>
-                  <p className="form-input">
-                    <label htmlFor="name">
-                      <h1 className="title">Name</h1>
+                      <div className="title">Genre</div>
                     </label>
                     <input
                       className="input py-6 has-background-link has-text-warning is-size-3"
                       type="text"
-                      name="name"
-                      value={newMovie.name}
+                      name="genre"
+                      value={newMovie.genre}
                       onChange={handleStringFieldChange}
                     />
-                  </p>
-                  <p className="form-input">
+                  </div>
+                  <div className="is-relative">
+                    <div className="form-input">
+                      <label htmlFor="title">
+                        <div className="title">Title</div>
+                      </label>
+                      <input
+                        className="input py-6 has-background-link has-text-warning is-size-3"
+                        type="text"
+                        name="title"
+                        value={newMovie.title}
+                        onChange={handleStringFieldChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-input">
                     <label htmlFor="releaseDate">
-                      <h1 className="title">Release Date</h1>
+                      <div className="title">
+                        Release Date (4digitYear-month-day)
+                      </div>
                     </label>
                     <input
                       className="input py-6 has-background-link has-text-warning is-size-3"
@@ -139,17 +144,17 @@ export function NewMovie() {
                       value={newMovie.releaseDate}
                       onChange={handleStringFieldChange}
                     />
-                  </p>
-                  <p>
+                  </div>
+                  {/* Submit button */}
+                  <div>
                     <input
                       className="button mt-5 py-7 has-background-link has-text-warning is-size-4"
                       type="submit"
                       value="Submit"
                     />
-                  </p>
+                  </div>
                 </form>
               </div>
-
               {/* spacer */}
             </div>
           </div>

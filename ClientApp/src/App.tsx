@@ -131,9 +131,7 @@ export function App() {
                           <th>
                             <abbr title="Genre">Genre</abbr>
                           </th>
-                          <th>
-                            <abbr title="Name">Name</abbr>
-                          </th>
+
                           <th>
                             <abbr title="Release Date">Release Date</abbr>
                           </th>
@@ -151,7 +149,6 @@ export function App() {
                             <td>{movie.title}</td>
                             <td>{movie.director}</td>
                             <td>{movie.genre}</td>
-                            <td>{movie.title}</td>
                             <td>{movie.releaseDate}</td>
                           </tr>
                         ))}
@@ -168,9 +165,7 @@ export function App() {
                           <th>
                             <abbr title="Genre">Genre</abbr>
                           </th>
-                          <th>
-                            <abbr title="Name">Name</abbr>
-                          </th>
+
                           <th>
                             <abbr title="Release Date">Release Date</abbr>
                           </th>

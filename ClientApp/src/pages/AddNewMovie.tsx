@@ -92,7 +92,7 @@ export function NewMovie() {
               <div className="is-relative mb-6">
                 <form onSubmit={handleFormSubmit}>
                   {errorMessage ? (
-                    <p className="form-error">{errorMessage}</p>
+                    <p className="form-error is-warning">{errorMessage}</p>
                   ) : null}
                   <h1 className="title is-4 mt-4 mb-1">
                     Add a new movie to the database

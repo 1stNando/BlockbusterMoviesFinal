@@ -20,9 +20,11 @@ export function App() {
   )
 
   console.log({ movies2 })
+
   // State for the search text
   const [searchText, setSearchText] = useState('')
-  // Function to filter movies based on search text
+
+  // Function to filter movies based on search text input from user.
   const filteredMovies2 = movies2.filter(
     (movie) =>
       movie.title.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -67,6 +69,10 @@ export function App() {
                 <div className="navbar-end">
                   <a className="navbar-item is-active has-text-white">Home</a>
                   <a className="navbar-item has-text-white">Examples</a>
+                  <Link className="navbar-item has-text-white" to="/signup">
+                    {' '}
+                    Sign Up
+                  </Link>
                   <a className="navbar-item has-text-white">Documentation</a>
 
                   <Link className="navbar-item has-text-white" to="/new">
@@ -154,10 +160,10 @@ export function App() {
                         <tr>
                           <th>Movie</th>
                           <th>
-                            <abbr title="Director">Director</abbr>
+                            <abbr title="Director">Title</abbr>
                           </th>
                           <th>
-                            <abbr title="Title">Title</abbr>
+                            <abbr title="Title">Director</abbr>
                           </th>
                           <th>
                             <abbr title="Genre">Genre</abbr>

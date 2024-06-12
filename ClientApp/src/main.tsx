@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { NewMovie } from './pages/AddNewMovie'
+import { SignUp } from './pages/SignUp'
 
 //react-query library configuration
 //Instantiates the query client method we need to query the database using react-query library we installed.
@@ -20,6 +21,10 @@ const routingObject = createBrowserRouter([
   {
     path: '/new',
     element: <NewMovie />,
+  },
+  {
+    path: '/signup',
+    element: <SignUp />,
   },
 ])
 

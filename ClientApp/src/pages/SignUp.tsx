@@ -1,9 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export function SignUp() {
   return (
     <>
       <div className="column is-half is-offset-one-quarter">
+        <div>
+          <a className="navbar-item is-active has-text-primary">Home</a>
+          <Link to="*">Click to go back HOME</Link>
+        </div>
         <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
           <form action="#">
             <span className="has-text-link has-text-weight-semibold is-size-4">

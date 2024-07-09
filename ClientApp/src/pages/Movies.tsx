@@ -7,6 +7,7 @@ import { MovieClassType } from '../types'
 
 export function Movies() {
   //NOTE: In this code const { data: movies2 = [] } = we are destructuring the return of react-query to get the data property and renaming it movies2. This will fetch the list of movies. Using react-query library to integrate with our backend API.
+
   const { data: movies2 = [] } = useQuery<MovieClassType[]>(
     ['movies2'],
     async function () {
@@ -14,8 +15,6 @@ export function Movies() {
       return response.json()
     }
   )
-
-  console.log({ movies2 })
 
   // State for the search text
   const [searchText, setSearchText] = useState('')
@@ -68,7 +67,7 @@ export function Movies() {
               <div id="navbarMenuHeroA" className="navbar-menu">
                 <div className="navbar-end">
                   <a className="navbar-item is-active has-text-white">Home</a>
-                  <a className="navbar-item has-text-white">Examples</a>
+
                   <Link className="navbar-item has-text-white" to="/signup">
                     {' '}
                     Sign Up
@@ -146,7 +145,11 @@ export function Movies() {
                             <td>
                               <strong>{movie.id}</strong>
                             </td>
-                            <td>{movie.title}</td>
+                            <td>
+                              <Link to={`/movieclasses/${movie.id}`}>
+                                {movie.title}
+                              </Link>
+                            </td>
                             <td>{movie.director}</td>
                             <td>{movie.genre}</td>
                             <td>{movie.releaseDate}</td>

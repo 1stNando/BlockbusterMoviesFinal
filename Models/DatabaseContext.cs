@@ -19,6 +19,7 @@ namespace BlockbusterMoviesFinal.Models
         public DbSet<Movie> Movies { get; set; }
 
         public DbSet<MovieClass> MovieClasses { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

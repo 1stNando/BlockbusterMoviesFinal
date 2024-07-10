@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BlockbusterMoviesFinal.Models;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace BlockbusterMoviesFinal.Controllers
 {
@@ -31,11 +32,26 @@ namespace BlockbusterMoviesFinal.Controllers
         // Returns a list of all your MovieClasses
         //
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieClass>>> GetMovieClasses()
+        public async Task<ActionResult<IEnumerable<MovieClass>>> GetMovieClasses(string filter)
         {
             // Uses the database context in `_context` to request all of the MovieClasses, sort
             // them by row id and return them as a JSON array.
-            return await _context.MovieClasses.OrderBy(row => row.Id).ToListAsync();
+            //return await _context.MovieClasses.OrderBy(row => row.Id).ToListAsync();
+
+            // Uses the database context in `_context` to request all of the Movies, 
+            // sort them by row id and return them as a JSON array.
+            if (filter == null)
+            {
+                return await _context.MovieClasses.
+                OrderBy(row => row.Id).Include(movie => movie.Reviews).ToListAsync();
+            }
+            else
+            { // In addition we return the reviews associated with the movie. 
+                return await _context.MovieClasses.OrderBy(row => row.Id).
+                    Where(movie => movie.Title.ToLower().Contains(filter.ToLower())).
+                    Include(movie => movie.Reviews).
+                    ToListAsync();
+            }
         }
 
         // GET: api/MovieClasses/5

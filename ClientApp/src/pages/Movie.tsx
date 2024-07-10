@@ -3,6 +3,7 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { MovieClassType } from '../types'
 import { useQuery } from 'react-query'
+import BBVLogo from '../images/BBVLogo.png'
 
 // Page representing one movie view. Uses the {id} to fetch corresponding data. http://localhost:5000/movieclasses/35
 
@@ -43,11 +44,11 @@ export function Movie() {
       <section className="hero is-small">
         <div className="hero-head">
           <div className="hero-body has-background-warning">
-            <div className="container">
-              {/* <img className="BBVLogo2" src={BBVLogo} alt="BBVLogo" /> */}
+            <div className="container ml-0">
+              <img className="BBVLogo2" src={BBVLogo} alt="BBVLogo" />
             </div>
 
-            <div className="container">
+            {/* <div className="container">
               <div>
                 <p>
                   The container width will be full below screen size of 1024px
@@ -55,9 +56,9 @@ export function Movie() {
 
                 <h3>GeeksforGeeks!!!!</h3>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className="hero-foot">Footer of the hero section!!!</div>
+          <div className="hero-foot ml-5">Footer of the hero section!!!</div>
         </div>
       </section>
       {/* Creation of a navbar */}
@@ -81,7 +82,7 @@ export function Movie() {
                   <a className="navbar-item has-text-white">Documentation</a>
 
                   <Link className="navbar-item has-text-white" to="/new">
-                    ADD A MOVIE
+                    Add a Movie
                   </Link>
                   <span className="navbar-item">
                     <a className="button is-primary is-inverted">
@@ -110,19 +111,66 @@ export function Movie() {
         {/* //end of navbar Top part/////////////////////////////////////////////////////////// */}
         <div className="container">
           <section className="section">
-            <div>
-              <h1 className="title has-text-centered ">
-                Results of Movies in our database{' '}
-                <i className="fa-brands fa-font-awesome"></i>
-              </h1>
-            </div>
             <div className="container">
-              {/* Table  */}
-              <div className="columns is-centered ">
-                <div className="column is-7">
-                  <div className="container is-mobile is-centered">
-                    <p>Hello!!</p>
-                  </div>
+              <div className="column is-half is-offset-one-quarter">
+                <div>
+                  <a className="navbar-item is-active has-text-primary">
+                    <Link className="is-active has-text-primary" to="*">
+                      Click here to go back HOME
+                    </Link>
+                  </a>
+                </div>
+                <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
+                  <form>
+                    <span className="has-text-link has-text-weight-semibold is-size-4">
+                      Viewing detailed data of one movie
+                    </span>
+                    <h3 className="title is-4 mt-4 mb-1">
+                      Movie title: {movie.title}
+                    </h3>
+
+                    <div className="is-relative mb-6">
+                      <div className="input py-6 has-background-link has-text-warning is-size-3">
+                        {movie.director}
+                      </div>
+                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                        Director
+                      </span>
+                    </div>
+
+                    <div className="is-relative mb-6 ">
+                      <div className="input py-6 has-background-link has-text-warning is-size-3">
+                        {movie.genre}
+                      </div>
+                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                        Genre
+                      </span>
+                    </div>
+
+                    <div className="is-relative mb-6 ">
+                      <div className="input py-6 has-background-link has-text-warning is-size-3">
+                        {movie.releaseDate}
+                      </div>
+                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                        Release date
+                      </span>
+                    </div>
+
+                    {/* /////end of middle section */}
+
+                    {/* <label className="is-flex mb-10">
+                  <input
+                    className="mt-1"
+                    type="checkbox"
+                    name="terms"
+                    value="1"
+                  />
+                  <span className="is-inline-block has-text-grey-dark">
+                    By signing up, you agree to our{' '}
+                    <a href="#">Terms, Data Policy</a>
+                  </span>
+                </label> */}
+                  </form>
                 </div>
               </div>
             </div>
@@ -304,78 +352,8 @@ export function Movie() {
       <section>
         <div className="container">
           <div>
-            <h1>Hello world!</h1>
+            <h1>Hello world!!!!!!!!!!!!!!!!</h1>
             <h1>{movie.title}</h1>
-          </div>
-          <div className="column is-half is-offset-one-quarter">
-            <div>
-              <a className="navbar-item is-active has-text-primary">Home</a>
-              <Link to="*">Click to go back HOME</Link>
-            </div>
-            <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
-              <form>
-                <span className="has-text-link has-text-weight-semibold is-size-4">
-                  Viewing detailed data of one movie
-                </span>
-                <h3 className="title is-4 mt-4 mb-1">
-                  Movie title: {movie.title}
-                </h3>
-
-                <div className="is-relative mb-6">
-                  <div className="input py-6 has-background-link has-text-warning is-size-3">
-                    {movie.director}
-                  </div>
-                  <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                    Director
-                  </span>
-                </div>
-
-                <div className="is-relative mb-6 ">
-                  <div className="input py-6 has-background-link has-text-warning is-size-3">
-                    {movie.releaseDate}
-                  </div>
-                  <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                    Release date
-                  </span>
-                </div>
-
-                <div className="is-relative mb-6 ">
-                  <input
-                    className="input py-6 has-background-link has-text-warning is-size-3"
-                    type="email"
-                    placeholder="e.g hello@xyz.com"
-                  />
-                  <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                    Your email address
-                  </span>
-                </div>
-
-                <div className="is-relative mb-6">
-                  <input
-                    className="input py-6 has-background-link has-text-warning is-size-3"
-                    type="password"
-                    placeholder="********"
-                  />
-                  <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                    Password
-                  </span>
-                </div>
-                {/* /////end of middle section */}
-
-                <label className="is-flex mb-10">
-                  <input
-                    className="mt-1"
-                    type="checkbox"
-                    name="terms"
-                    value="1"
-                  />
-                  <span className="is-inline-block has-text-grey-dark">
-                    By signing up, you agree to our{' '}
-                    <a href="#">Terms, Data Policy</a>
-                  </span>
-                </label>
-              </form>
-            </div>
           </div>
         </div>
       </section>

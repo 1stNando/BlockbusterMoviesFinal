@@ -33,24 +33,22 @@ export function Movies() {
       <section className="hero is-small">
         <div className="hero-head">
           <div className="hero-body has-background-warning">
-            <div className="container">
+            <div className="container ml-0">
               <img className="BBVLogo2" src={BBVLogo} alt="BBVLogo" />
             </div>
 
-            <div className="container">
-              <div>
+            <div className="container ml-0">
+              <div className="has-text-white">
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-                  consectetur et eum facere dignissimos, sequi non voluptatum
-                  hic soluta voluptate officiis debitis incidunt rem animi
-                  perferendis error voluptatem nemo vel.
+                  This website has been created to store the favorite movies of
+                  users.
                 </p>
-
-                <h3>GeeksforGeeks!!!!</h3>
               </div>
             </div>
           </div>
-          <div className="hero-foot">Footer of the hero section!!!</div>
+          <div className="hero-foot ml-5">
+            Please feel free to add your favorite movie to our database!
+          </div>
         </div>
       </section>
 
@@ -59,11 +57,6 @@ export function Movies() {
         <div className="hero-head">
           <nav className="navbar">
             <div className="container">
-              <div className="navbar-brand">
-                <a className="navbar-item">
-                  <img className="BBVLogo" src={BBVLogo} alt="BBVLogo" />
-                </a>
-              </div>
               <div id="navbarMenuHeroA" className="navbar-menu">
                 <div className="navbar-end">
                   <a className="navbar-item is-active has-text-white">Home</a>

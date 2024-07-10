@@ -212,10 +212,11 @@ export function Movies() {
                 <li>
                   Made with
                   <img
-                    className="BulmaLogo"
+                    className="BulmaLogo ml-2"
                     src="https://bulma.io/assets/images/bulma-type-white.png"
                     alt="Logo"
                   />
+                  .io
                 </li>
               </ul>
             </div>

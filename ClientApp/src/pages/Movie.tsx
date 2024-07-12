@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 //import BBVLogo from '.BBVLogo.png'
 import { Link, useParams } from 'react-router-dom'
-import { MovieClassType } from '../types'
-import { useQuery } from 'react-query'
+import { MovieClassType, ReviewType } from '../types'
+import { useMutation, useQuery } from 'react-query'
 import BBVLogo from '../images/BBVLogo.png'
 
 // Page representing one movie view. Uses the {id} to fetch corresponding data. http://localhost:5000/movieclasses/35
+
+// type ReviewsFromMovieProps = {
+//   review: ReviewType
+// }
 
 async function loadOneMovie(id: string | undefined) {
   const response = await fetch(`/api/movieclasses/${id}`)
@@ -24,13 +28,29 @@ const NullMovie: MovieClassType = {
   genre: '',
   director: '',
   releaseDate: '',
+  reviews: [],
+}
+
+// handle submitting form for review
+async function submitNewReview(review: ReviewType) {
+  const response = await fetch(`/api/Reviews`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(review),
+  })
+
+  if (response.ok) {
+    return response.json()
+  } else {
+    throw await response.json()
+  }
 }
 
 export function Movie() {
   // React router needed to find id of movie.
   const { id } = useParams<{ id: string }>()
 
-  const { data: movie = NullMovie } = useQuery<MovieClassType>(
+  const { refetch, data: movie = NullMovie } = useQuery<MovieClassType>(
     ['one-movie', id],
     () => loadOneMovie(id)
   )
@@ -38,6 +58,37 @@ export function Movie() {
   // if (movie === undefined) {
   //   return null
   // }
+
+  const [newReview, setNewReview] = useState<ReviewType>({
+    id: undefined,
+    body: '',
+    stars: 5,
+    createdAt: new Date(),
+    movieClassId: Number(id),
+  })
+  // method to track the changes of the text input fields
+  function handleNewReviewTextFieldChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const name = event.target.name
+    const value = event.target.value
+    setNewReview({ ...newReview, [name]: value })
+  }
+
+  const createNewReview = useMutation(submitNewReview, {
+    onSuccess: function () {
+      refetch()
+      setNewReview({
+        ...newReview,
+        body: '',
+        stars: 5,
+      })
+    },
+  })
+
+  function handleStarRadioButton(newStars: number) {
+    setNewReview({ ...newReview, stars: newStars })
+  }
 
   return (
     <>
@@ -155,6 +206,101 @@ export function Movie() {
                         Release date
                       </span>
                     </div>
+
+                    <div className="is-relative mb-6 ">
+                      <div className="input py-6 has-background-link has-text-warning is-size-3">
+                        3
+                      </div>
+                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                        Number of reviews
+                      </span>
+                    </div>
+
+                    <div className="is-relative mb-3 ">
+                      <div>
+                        <div className="is-relative">
+                          <h1 className="title is-4 mt-4 mb-1">
+                            Add a new review to our database
+                          </h1>
+                          <div className="form-input">
+                            <textarea
+                              className="form-control textarea has-background-link has-text-warning"
+                              value={newReview.body}
+                              onChange={handleNewReviewTextFieldChange}
+                              style={{ fontSize: '1.5rem', width: '100%' }}
+                            ></textarea>
+                            <input
+                              id="star-rating-1"
+                              type="radio"
+                              name="stars"
+                              checked={newReview.stars === 1}
+                              onChange={() => handleStarRadioButton(1)}
+                            />
+                            <input
+                              id="star-rating-2"
+                              type="radio"
+                              name="stars"
+                              checked={newReview.stars === 2}
+                              onChange={() => handleStarRadioButton(2)}
+                            />
+                            <input
+                              id="star-rating-3"
+                              type="radio"
+                              name="stars"
+                              checked={newReview.stars === 3}
+                              onChange={() => handleStarRadioButton(3)}
+                            />
+                            <input
+                              id="star-rating-4"
+                              type="radio"
+                              name="stars"
+                              checked={newReview.stars === 4}
+                              onChange={() => handleStarRadioButton(4)}
+                            />
+                            <input
+                              id="star-rating-5"
+                              type="radio"
+                              name="stars"
+                              checked={newReview.stars === 5}
+                              onChange={() => handleStarRadioButton(5)}
+                            />
+                          </div>
+                        </div>
+                        <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                          Leave a review!
+                        </span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <input
+                        className="button mt-5 py-7 has-background-link has-text-warning is-size-4"
+                        type="submit"
+                        value="Submit"
+                        onSubmit={function (event) {
+                          event.preventDefault()
+                          createNewReview.mutate(newReview)
+                        }}
+                      />
+                    </div>
+
+                    {/* render list of reviews */}
+                    {/* <div className="is-relative mb-6 ">
+                      <div className="input py-6 has-background-link has-text-warning is-size-3">
+                        <ul className="input py-6 has-background-link has-text-warning is-size-3">
+                          {movie.reviews.map((review) => (
+                            <li key={props.review.id}>
+                              <div className="body">
+                                <p>{review.body}</p>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                        Reviews
+                      </span>
+                    </div> */}
 
                     {/* /////end of middle section */}
 

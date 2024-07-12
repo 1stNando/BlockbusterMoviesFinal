@@ -22,4 +22,14 @@ export type MovieClassType = {
   genre: string
   director: string
   releaseDate: string
+
+  reviews: ReviewType[]
+}
+
+export type ReviewType = {
+  id?: number | undefined
+  body: string
+  stars: number
+  createdAt?: string | undefined | Date
+  movieClassId: number
 }

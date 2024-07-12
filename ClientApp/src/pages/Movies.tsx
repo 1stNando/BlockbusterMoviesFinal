@@ -127,6 +127,10 @@ export function Movies() {
                           <th>
                             <abbr title="Release Date">Release Date</abbr>
                           </th>
+
+                          <th>
+                            <abbr title="Reviews">Reviews</abbr>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -146,6 +150,7 @@ export function Movies() {
                             <td>{movie.director}</td>
                             <td>{movie.genre}</td>
                             <td>{movie.releaseDate}</td>
+                            <td>{movie.reviews.length}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -164,6 +169,10 @@ export function Movies() {
 
                           <th>
                             <abbr title="Release Date">Release Date</abbr>
+                          </th>
+
+                          <th>
+                            <abbr title="Reviews">Reviews</abbr>
                           </th>
                         </tr>
                       </tfoot>

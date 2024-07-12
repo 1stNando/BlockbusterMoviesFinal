@@ -18,6 +18,7 @@ export function NewMovie() {
     genre: '',
     title: '',
     releaseDate: '',
+    reviews: [],
   })
 
   // Utility function that makes our form submission.

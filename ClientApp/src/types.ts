@@ -30,6 +30,6 @@ export type ReviewType = {
   id?: number | undefined
   body: string
   stars: number
-  createdAt?: string | undefined | Date
+  createdAt?: string
   movieClassId: number
 }

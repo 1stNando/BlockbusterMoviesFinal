@@ -21,16 +21,6 @@ async function loadOneMovie(id: string | undefined) {
   }
 }
 
-// Represent the default value of our object when there is no data being returned from react query. Null object pattern rather than guard clause. Handles the case where the object is missing while waiting for the real data to be returned.
-const NullMovie: MovieClassType = {
-  id: undefined,
-  title: '',
-  genre: '',
-  director: '',
-  releaseDate: '',
-  reviews: [],
-}
-
 // handle submitting form for review
 async function submitNewReview(review: ReviewType) {
   const response = await fetch(`/api/Reviews`, {
@@ -46,7 +36,20 @@ async function submitNewReview(review: ReviewType) {
   }
 }
 
+// Represent the default value of our object when there is no data being returned from react query. Null object pattern rather than guard clause. Handles the case where the object is missing while waiting for the real data to be returned.
+const NullMovie: MovieClassType = {
+  id: undefined,
+  title: '',
+  genre: '',
+  director: '',
+  releaseDate: '',
+  reviews: [],
+}
+
 export function Movie() {
+  // Date format needed to post a review correctly.
+  const dateFormat = `EEEE, MMMM do, yyyy 'at' h:mm aaa`
+
   // React router needed to find id of movie.
   const { id } = useParams<{ id: string }>()
 
@@ -60,20 +63,10 @@ export function Movie() {
   // }
 
   const [newReview, setNewReview] = useState<ReviewType>({
-    id: undefined,
     body: '',
     stars: 5,
-    createdAt: new Date(),
     movieClassId: Number(id),
   })
-  // method to track the changes of the text input fields
-  function handleNewReviewTextFieldChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    const name = event.target.name
-    const value = event.target.value
-    setNewReview({ ...newReview, [name]: value })
-  }
 
   const createNewReview = useMutation(submitNewReview, {
     onSuccess: function () {
@@ -85,6 +78,15 @@ export function Movie() {
       })
     },
   })
+
+  // method to track the changes of the text input fields
+  function handleNewReviewTextFieldChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const name = event.target.name
+    const value = event.target.value
+    setNewReview({ ...newReview, [name]: value })
+  }
 
   function handleStarRadioButton(newStars: number) {
     setNewReview({ ...newReview, stars: newStars })
@@ -124,24 +126,24 @@ export function Movie() {
               </div>
               <div id="navbarMenuHeroA" className="navbar-menu">
                 <div className="navbar-end">
-                  <a className="navbar-item is-active has-text-white">Home</a>
-                  <a className="navbar-item has-text-white">Examples</a>
+                  <p className="navbar-item is-active has-text-white">Home</p>
+                  <p className="navbar-item has-text-white">Examples</p>
                   <Link className="navbar-item has-text-white" to="/signup">
                     {' '}
                     Sign Up
                   </Link>
-                  <a className="navbar-item has-text-white">Documentation</a>
+                  <p className="navbar-item has-text-white">Documentation</p>
 
                   <Link className="navbar-item has-text-white" to="/new">
                     Add a Movie
                   </Link>
                   <span className="navbar-item">
-                    <a className="button is-primary is-inverted">
+                    <p className="button is-primary is-inverted">
                       <span className="icon">
                         <i className="fab fa-github"></i>
                       </span>
                       <span>Download</span>
-                    </a>
+                    </p>
                   </span>
                   <span className="navbar-item">
                     {/* Search input for table */}
@@ -172,7 +174,12 @@ export function Movie() {
                   </a>
                 </div>
                 <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
-                  <form>
+                  <form
+                    onSubmit={function (event) {
+                      event.preventDefault()
+                      createNewReview.mutate(newReview)
+                    }}
+                  >
                     <span className="has-text-link has-text-weight-semibold is-size-4">
                       Viewing detailed data of one movie
                     </span>
@@ -209,7 +216,27 @@ export function Movie() {
 
                     <div className="is-relative mb-6 ">
                       <div className="input py-6 has-background-link has-text-warning is-size-3">
-                        3
+                        {movie.reviews.length}
+                      </div>
+                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                        Number of reviews
+                      </span>
+                    </div>
+
+                    <div className="is-relative mb-6">
+                      <div className="py-6 has-background-link has-text-warning is-size-3">
+                        <h1>Reviews for {movie.title}</h1>
+
+                        <ul className="reviews">
+                          {movie.reviews.map((review) => (
+                            <li key={review.id}>
+                              <div className="body">
+                                <p>{review.body}</p>
+                              </div>
+                              <time>{review.createdAt}</time>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                       <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
                         Number of reviews
@@ -225,7 +252,7 @@ export function Movie() {
                           <div className="form-input">
                             <textarea
                               className="form-control textarea has-background-link has-text-warning"
-                              value={newReview.body}
+                              // value={newReview.body}
                               onChange={handleNewReviewTextFieldChange}
                               style={{ fontSize: '1.5rem', width: '100%' }}
                             ></textarea>
@@ -277,10 +304,6 @@ export function Movie() {
                         className="button mt-5 py-7 has-background-link has-text-warning is-size-4"
                         type="submit"
                         value="Submit"
-                        onSubmit={function (event) {
-                          event.preventDefault()
-                          createNewReview.mutate(newReview)
-                        }}
                       />
                     </div>
 
@@ -344,21 +367,21 @@ export function Movie() {
             <div className="column is-three-fifths is-offset-one-fifth">
               <ul className="is-center">
                 <li className="is-active is-background-warning">
-                  <a>Overview</a>
+                  <p>Overview</p>
                 </li>
                 <li>
-                  <a>
+                  <p>
                     Github{' '}
                     <span className="icon">
                       <i className="fab fa-github"></i>
                     </span>
-                  </a>
+                  </p>
                 </li>
                 <li>
-                  <a>Grid</a>
+                  <p>Grid</p>
                 </li>
                 <li>
-                  <a>Elements</a>
+                  <p>Elements</p>
                 </li>
                 <li>
                   Made with

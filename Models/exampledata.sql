@@ -52,8 +52,8 @@ INSERT INTO "MovieClasses" ("Title", "ReleaseDate", "Director", "Genre") VALUES 
 -- Sample Reviews for each movie in the MovieClasses table
 
 -- The Shawshank Redemption
-INSERT INTO "Reviews" ("MovieClassId", "Body", "CreatedAt", "Stars") VALUES (1, 'A moving story about hope and friendship.', '2024-07-10', 5);
-INSERT INTO "Reviews" ("MovieClassId", "Body", "CreatedAt", "Stars") VALUES (1, 'Inspirational and unforgettable.', '2024-07-10', 4);
+INSERT INTO "Reviews" ("MovieClassId", "Body", "CreatedAt", "Stars") VALUES (1, 'A moving story about hope and friendship.', '2024-07-10 14:23:55', 5);
+INSERT INTO "Reviews" ("MovieClassId", "Body", "CreatedAt", "Stars") VALUES (1, 'Inspirational and unforgettable.', '2024-07-10 14:23:55', 4);
 
 -- The Godfather
 INSERT INTO "Reviews" ("MovieClassId", "Body", "CreatedAt", "Stars") VALUES (2, 'A gripping tale of family and power.', '2024-07-10', 5);

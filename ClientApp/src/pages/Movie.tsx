@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-//import BBVLogo from '.BBVLogo.png'
 import { Link, useParams } from 'react-router-dom'
 import { MovieClassType, ReviewType } from '../types'
 import { useMutation, useQuery } from 'react-query'
 import BBVLogo from '../images/BBVLogo.png'
+
+import { formatDate } from 'date-fns'
 
 // Page representing one movie view. Uses the {id} to fetch corresponding data. http://localhost:5000/movieclasses/35
 
@@ -228,18 +229,26 @@ export function Movie() {
                         <h1>Reviews for {movie.title}</h1>
 
                         <ul className="reviews">
-                          {movie.reviews.map((review) => (
+                          {movie.reviews.slice(-3).map((review) => (
                             <li key={review.id}>
-                              <div className="body">
+                              <div className="box body py-6 has-background-link has-text-warning is-size-3">
                                 <p>{review.body}</p>
                               </div>
-                              <time>{review.createdAt}</time>
+
+                              <time>
+                                {review.createdAt
+                                  ? formatDate(
+                                      new Date(review.createdAt),
+                                      dateFormat
+                                    )
+                                  : null}
+                              </time>
                             </li>
                           ))}
                         </ul>
                       </div>
                       <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                        Number of reviews
+                        Latest 3 reviews
                       </span>
                     </div>
 

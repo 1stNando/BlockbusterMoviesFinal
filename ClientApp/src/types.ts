@@ -1,5 +1,7 @@
 // This defines a TypeScript type to specify the structure of the data we receive from the API.
 
+import { CSSProperties } from 'react'
+
 export type APIError = {
   errors: Record<string, string[]>
   status: number

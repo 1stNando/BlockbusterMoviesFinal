@@ -2,6 +2,7 @@
   "name": "BlockbusterMoviesFinal",
   "private": "true",
   "dependencies": {
+    "date-fns": "^3.6.0",
     "dotnet": "^1.1.4"
   }
 }

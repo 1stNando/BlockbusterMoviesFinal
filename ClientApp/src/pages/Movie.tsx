@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { MovieClassType, ReviewType } from '../types'
+import { MovieClassType, NewReviewType, ReviewType } from '../types'
 import { useMutation, useQuery } from 'react-query'
 import BBVLogo from '../images/BBVLogo.png'
 
@@ -23,7 +23,7 @@ async function loadOneMovie(id: string | undefined) {
 }
 
 // handle submitting form for review
-async function submitNewReview(review: ReviewType) {
+async function submitNewReview(review: NewReviewType) {
   const response = await fetch(`/api/Reviews`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -63,10 +63,12 @@ export function Movie() {
   //   return null
   // }
 
-  const [newReview, setNewReview] = useState<ReviewType>({
+  const [newReview, setNewReview] = useState<NewReviewType>({
+    id: undefined,
     body: '',
     stars: 5,
-    movieClassId: Number(id),
+    createdAt: new Date(),
+    movieId: Number(id),
   })
 
   const createNewReview = useMutation(submitNewReview, {
@@ -182,7 +184,7 @@ export function Movie() {
                     }}
                   >
                     <span className="has-text-link has-text-weight-semibold is-size-4">
-                      Viewing detailed data of one movie
+                      Viewing detailed information
                     </span>
                     <h3 className="title is-4 mt-4 mb-1">
                       Movie title: {movie.title}
@@ -226,7 +228,7 @@ export function Movie() {
 
                     <div className="is-relative mb-6">
                       <div className="py-6 has-background-link has-text-warning is-size-3">
-                        <h1>Reviews for {movie.title}</h1>
+                        <h1 className="title">Reviews for {movie.title}</h1>
 
                         <ul className="reviews">
                           {movie.reviews.slice(-3).map((review) => (
@@ -302,7 +304,7 @@ export function Movie() {
                             />
                           </div>
                         </div>
-                        <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                        <span className="is-absolute is-top-0 is-left-0 mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
                           Leave a review!
                         </span>
                       </div>
@@ -360,10 +362,7 @@ export function Movie() {
         <div className="hero-body mb-0 py-5">
           <div className="container has-text-centered">
             <p className="title is-size-3">Please Join!</p>
-            <p className="subtitle">
-              Subtitle Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Earum maiores possimus quia recusandae.
-            </p>
+            <p className="subtitle">Thank you for visiting this website</p>
           </div>
         </div>
 
@@ -375,7 +374,7 @@ export function Movie() {
           <nav className="tabs">
             <div className="column is-three-fifths is-offset-one-fifth">
               <ul className="is-center">
-                <li className="is-active is-background-warning">
+                <li>
                   <p>Overview</p>
                 </li>
                 <li>
@@ -392,7 +391,7 @@ export function Movie() {
                 <li>
                   <p>Elements</p>
                 </li>
-                <li>
+                <li className="ml-3 mb-4">
                   Made with
                   <img
                     className="BulmaLogo ml-2"
@@ -406,6 +405,60 @@ export function Movie() {
           </nav>
         </div>
       </section>
+
+      <body>
+        <section className="section">
+          <div className="container">
+            <h1 className="title">REVIEWS</h1>
+            <p className="subtitle">You can input a review here</p>
+            <div className="field">
+              <div className="control">
+                <input className="input" type="text" placeholder="Input" />
+              </div>
+            </div>
+
+            <div className="field">
+              <p className="control">
+                <span className="select">
+                  <select>
+                    <option>Select dropdown</option>
+                  </select>
+                  <select>
+                    <option>Option</option>
+                  </select>
+                </span>
+              </p>
+            </div>
+            <div className="buttons">
+              <a className="button is-primary">Primary</a>
+              <a className="button is-link">Link</a>
+            </div>
+
+            <div className="card">
+              <div className="card-content">
+                <p className="title">
+                  <p className="form-input">
+                    <label htmlFor="body">Body</label>
+
+                    <textarea
+                      className="textarea"
+                      placeholder="Write your review here"
+                      name="body"
+                      value={newReview.body}
+                      onChange={handleNewReviewTextFieldChange}
+                    />
+                    <span className="subtitle note">
+                      Enter a brief summary of your review. Example:{' '}
+                      <strong>Excellent movie!</strong>
+                    </span>
+                    <button className="button">Submit</button>
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </body>
     </>
   )
 }

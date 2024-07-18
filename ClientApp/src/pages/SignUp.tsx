@@ -57,9 +57,42 @@ export function SignUp() {
                 <a href="#">Terms, Data Policy</a>
               </span>
             </label>
+
+            <button className="button" type="submit">
+              Submit
+            </button>
           </form>
         </div>
       </div>
+      {/* <div className="is-relative mb-6">
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className="input" type="email" placeholder="Email" />
+            <span className="icon is-small is-left">
+              <i className="fas fa-envelop"></i>
+            </span>
+            <span className="icon is-small is-right">
+              <i className="fas fa-check"></i>
+            </span>
+          </p>
+        </div>
+
+        <div className="field">
+          <p className="control has-icons-left">
+            <input type="password" className="input" placeholder="Password" />
+            <span className="icon is-small is-left">
+              <i className="fas fa-block"></i>
+            </span>
+          </p>
+        </div>
+
+        <div className="field">
+          <p className="control">
+            <button className="button is-success">Sign up</button>
+          </p>
+        </div>
+      </div>
+      <br /> */}
     </>
   )
 }

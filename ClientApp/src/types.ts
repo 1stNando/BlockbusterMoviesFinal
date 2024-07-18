@@ -35,3 +35,12 @@ export type ReviewType = {
   createdAt?: string
   movieClassId: number
 }
+
+// type for submitting new review
+export type NewReviewType = {
+  id: number | undefined
+  body: string
+  stars: number
+  createdAt: Date
+  movieId: number
+}

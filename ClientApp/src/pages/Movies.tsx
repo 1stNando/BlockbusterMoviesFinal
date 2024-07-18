@@ -59,8 +59,11 @@ export function Movies() {
             <div className="container">
               <div id="navbarMenuHeroA" className="navbar-menu">
                 <div className="navbar-end">
-                  <a className="navbar-item is-active has-text-white">Home</a>
-
+                  <p className="navbar-item is-active has-text-white">
+                    <Link className="is-active has-text-primary" to="*">
+                      Home
+                    </Link>
+                  </p>
                   <Link className="navbar-item has-text-white" to="/signup">
                     {' '}
                     Sign Up

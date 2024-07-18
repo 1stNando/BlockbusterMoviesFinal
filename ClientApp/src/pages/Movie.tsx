@@ -114,7 +114,7 @@ export function Movie() {
               </div>
             </div> */}
           </div>
-          <div className="hero-foot ml-5">Footer of the hero section!!!</div>
+          <div className="hero-foot ml-5">Blockbuster Video Movie Database</div>
         </div>
       </section>
       {/* Creation of a navbar */}
@@ -129,7 +129,11 @@ export function Movie() {
               </div>
               <div id="navbarMenuHeroA" className="navbar-menu">
                 <div className="navbar-end">
-                  <p className="navbar-item is-active has-text-white">Home</p>
+                  <p className="navbar-item is-active has-text-white">
+                    <Link className="is-active has-text-primary" to="*">
+                      Home
+                    </Link>
+                  </p>
                   <p className="navbar-item has-text-white">Examples</p>
                   <Link className="navbar-item has-text-white" to="/signup">
                     {' '}
@@ -169,13 +173,6 @@ export function Movie() {
           <section className="section">
             <div className="container">
               <div className="column is-half is-offset-one-quarter">
-                <div>
-                  <a className="navbar-item is-active has-text-primary">
-                    <Link className="is-active has-text-primary" to="*">
-                      Click here to go back HOME
-                    </Link>
-                  </a>
-                </div>
                 <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
                   <form
                     onSubmit={function (event) {
@@ -250,7 +247,7 @@ export function Movie() {
                         </ul>
                       </div>
                       <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                        Latest 3 reviews
+                        Latest reviews
                       </span>
                     </div>
 
@@ -437,22 +434,108 @@ export function Movie() {
             <div className="card">
               <div className="card-content">
                 <p className="title">
-                  <p className="form-input">
-                    <label htmlFor="body">Body</label>
+                  <form
+                    onSubmit={function (event) {
+                      event.preventDefault()
+                      createNewReview.mutate(newReview)
+                    }}
+                  >
+                    <p className="form-input">
+                      <label htmlFor="body">Body</label>
 
-                    <textarea
-                      className="textarea"
-                      placeholder="Write your review here"
-                      name="body"
-                      value={newReview.body}
-                      onChange={handleNewReviewTextFieldChange}
-                    />
-                    <span className="subtitle note">
-                      Enter a brief summary of your review. Example:{' '}
-                      <strong>Excellent movie!</strong>
-                    </span>
-                    <button className="button">Submit</button>
-                  </p>
+                      <textarea
+                        className="textarea"
+                        placeholder="Write your review here"
+                        name="body"
+                        value={newReview.body}
+                        onChange={handleNewReviewTextFieldChange}
+                      />
+                      <div className="rating">
+                        <input
+                          id="star-rating-1"
+                          type="radio"
+                          name="stars"
+                          value="1"
+                          checked={newReview.stars === 1}
+                          onChange={() => handleStarRadioButton(1)}
+                        />
+                        <label htmlFor="star-rating-1">1 star</label>
+                        <input
+                          id="star-rating-2"
+                          type="radio"
+                          name="stars"
+                          value="2"
+                          checked={newReview.stars === 2}
+                          onChange={() => handleStarRadioButton(2)}
+                        />
+                        <label htmlFor="star-rating-2">2 stars</label>
+                        <input
+                          id="star-rating-3"
+                          type="radio"
+                          name="stars"
+                          value="3"
+                          checked={newReview.stars === 3}
+                          onChange={() => handleStarRadioButton(3)}
+                        />
+                        <label htmlFor="star-rating-3">3 stars</label>
+                        <input
+                          id="star-rating-4"
+                          type="radio"
+                          name="stars"
+                          value="4"
+                          checked={newReview.stars === 4}
+                          onChange={() => handleStarRadioButton(4)}
+                        />
+                        <label htmlFor="star-rating-4">4 stars</label>
+                        <input
+                          id="star-rating-5"
+                          type="radio"
+                          name="stars"
+                          value="5"
+                          checked={newReview.stars === 5}
+                          onChange={() => handleStarRadioButton(5)}
+                        />
+                        <label htmlFor="star-rating-5">5 stars</label>
+
+                        <div className="star-rating">
+                          <label
+                            htmlFor="star-rating-1"
+                            aria-label="1 star"
+                            title="1 star"
+                          ></label>
+                          <label
+                            htmlFor="star-rating-2"
+                            aria-label="2 stars"
+                            title="2 stars"
+                          ></label>
+                          <label
+                            htmlFor="star-rating-3"
+                            aria-label="3 stars"
+                            title="3 stars"
+                          ></label>
+                          <label
+                            htmlFor="star-rating-4"
+                            aria-label="4 stars"
+                            title="4 stars"
+                          ></label>
+                          <label
+                            htmlFor="star-rating-5"
+                            aria-label="5 stars"
+                            title="5 stars"
+                          ></label>
+                        </div>
+                      </div>
+                      <span className="subtitle note">
+                        Enter a brief summary of your review. Example:{' '}
+                        <strong>Excellent movie!</strong>
+                      </span>
+                      <button className="button" type="submit" value="Submit">
+                        <p>
+                          <input type="submit" value="Submit" />
+                        </p>
+                      </button>
+                    </p>
+                  </form>
                 </p>
               </div>
             </div>

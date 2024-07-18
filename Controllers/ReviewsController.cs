@@ -34,10 +34,6 @@ namespace BlockbusterMoviesFinal.Controllers
         }
 
 
-        // Private helper method that looks up an existing review by the supplied id
-        private bool ReviewExists(int id)
-        {
-            return _context.Reviews.Any(review => review.Id == id);
-        }
+
     }
 }

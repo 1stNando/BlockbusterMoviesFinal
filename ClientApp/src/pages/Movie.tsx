@@ -23,7 +23,7 @@ async function loadOneMovie(id: string | undefined) {
 }
 
 // handle submitting form for review
-async function submitNewReview(review: NewReviewType) {
+async function submitNewReview(review: ReviewType) {
   const response = await fetch(`/api/Reviews`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -63,12 +63,11 @@ export function Movie() {
   //   return null
   // }
 
-  const [newReview, setNewReview] = useState<NewReviewType>({
+  const [newReview, setNewReview] = useState<ReviewType>({
     id: undefined,
     body: '',
     stars: 5,
-    createdAt: new Date(),
-    movieId: Number(id),
+    movieClassId: Number(id),
   })
 
   const createNewReview = useMutation(submitNewReview, {
@@ -151,17 +150,6 @@ export function Movie() {
                       </span>
                       <span>Download</span>
                     </p>
-                  </span>
-                  <span className="navbar-item">
-                    {/* Search input for table */}
-                    {/* <form className="search">
-                      <input
-                        type="text"
-                        placeholder="Search database..."
-                        value={searchText}
-                        onChange={(event) => setSearchText(event.target.value)}
-                      />
-                    </form> */}
                   </span>
                 </div>
               </div>
@@ -259,8 +247,9 @@ export function Movie() {
                           </h1>
                           <div className="form-input">
                             <textarea
-                              className="form-control textarea has-background-link has-text-warning"
-                              // value={newReview.body}
+                              name="body"
+                              className="textarea has-background-link has-text-warning"
+                              value={newReview.body}
                               onChange={handleNewReviewTextFieldChange}
                               style={{ fontSize: '1.5rem', width: '100%' }}
                             ></textarea>
@@ -314,39 +303,6 @@ export function Movie() {
                         value="Submit"
                       />
                     </div>
-
-                    {/* render list of reviews */}
-                    {/* <div className="is-relative mb-6 ">
-                      <div className="input py-6 has-background-link has-text-warning is-size-3">
-                        <ul className="input py-6 has-background-link has-text-warning is-size-3">
-                          {movie.reviews.map((review) => (
-                            <li key={props.review.id}>
-                              <div className="body">
-                                <p>{review.body}</p>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                        Reviews
-                      </span>
-                    </div> */}
-
-                    {/* /////end of middle section */}
-
-                    {/* <label className="is-flex mb-10">
-                  <input
-                    className="mt-1"
-                    type="checkbox"
-                    name="terms"
-                    value="1"
-                  />
-                  <span className="is-inline-block has-text-grey-dark">
-                    By signing up, you agree to our{' '}
-                    <a href="#">Terms, Data Policy</a>
-                  </span>
-                </label> */}
                   </form>
                 </div>
               </div>

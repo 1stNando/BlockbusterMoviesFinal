@@ -13,6 +13,7 @@ namespace BlockbusterMoviesFinal.Models
 
         // Used by the database. Defines the one-to-one relation to MovieClass 
         public int MovieClassId { get; set; }
+
         // Used by EntityFramework/LINQ
         public MovieClass MovieClass { get; set; }
     }

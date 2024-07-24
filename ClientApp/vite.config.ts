@@ -22,4 +22,9 @@ export default defineConfig((configEnv) => ({
       ],
     }),
   ],
+
+  // Had to define this later on to resolve problem: Feature flag __VUE_PROD_HYDRATION_MISMATCH_DETAILS__ is not explicitly defined.
+  define: {
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true,
+  },
 }))

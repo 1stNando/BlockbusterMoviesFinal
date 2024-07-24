@@ -62,6 +62,8 @@ namespace BlockbusterMoviesFinal
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Needed to add this for time to be correct for posting reviews.
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             if (JWT_KEY == null || JWT_KEY.Length < 20)
             {
@@ -187,8 +189,7 @@ namespace BlockbusterMoviesFinal
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
                 }
             });
-            // Needed to add this for time to be correct for posting reviews.
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
         }
     }
 }

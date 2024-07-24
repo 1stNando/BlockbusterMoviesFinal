@@ -219,7 +219,7 @@ export function Movie() {
                           {movie.reviews.slice(-3).map((review) => (
                             <li key={review.id}>
                               <div className="box body py-6 has-background-link has-text-warning is-size-3">
-                                <p>{review.body}</p>
+                                <h1>{review.body}</h1>
                               </div>
 
                               <time>
@@ -328,21 +328,21 @@ export function Movie() {
             <div className="column is-three-fifths is-offset-one-fifth">
               <ul className="is-center">
                 <li>
-                  <p>Overview</p>
+                  <h1>Overview</h1>
                 </li>
                 <li>
-                  <p>
+                  <a>
                     Github{' '}
                     <span className="icon">
                       <i className="fab fa-github"></i>
                     </span>
-                  </p>
+                  </a>
                 </li>
                 <li>
-                  <p>Grid</p>
+                  <h1>Grid</h1>
                 </li>
                 <li>
-                  <p>Elements</p>
+                  <h1>Elements</h1>
                 </li>
                 <li className="ml-3 mb-4">
                   Made with
@@ -359,7 +359,7 @@ export function Movie() {
         </div>
       </section>
 
-      <body>
+      <div>
         <section className="section">
           <div className="container">
             <h1 className="title">REVIEWS</h1>
@@ -389,14 +389,14 @@ export function Movie() {
 
             <div className="card">
               <div className="card-content">
-                <p className="title">
+                <div className="title">
                   <form
                     onSubmit={function (event) {
                       event.preventDefault()
                       createNewReview.mutate(newReview)
                     }}
                   >
-                    <p className="form-input">
+                    <div className="form-input">
                       <label htmlFor="body">Body</label>
 
                       <textarea
@@ -486,18 +486,18 @@ export function Movie() {
                         <strong>Excellent movie!</strong>
                       </span>
                       <button className="button" type="submit" value="Submit">
-                        <p>
+                        <h1>
                           <input type="submit" value="Submit" />
-                        </p>
+                        </h1>
                       </button>
-                    </p>
+                    </div>
                   </form>
-                </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
-      </body>
+      </div>
     </>
   )
 }

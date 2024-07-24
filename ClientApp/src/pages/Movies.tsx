@@ -39,10 +39,10 @@ export function Movies() {
 
             <div className="container ml-0">
               <div className="has-text-white">
-                <p>
+                <h1>
                   This website has been created to store the favorite movies of
                   users.
-                </p>
+                </h1>
               </div>
             </div>
           </div>

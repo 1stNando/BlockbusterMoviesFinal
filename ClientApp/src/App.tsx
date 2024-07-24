@@ -28,7 +28,7 @@ export function App() {
         <div className="container">
           {/* !Content inside container */}
           <h1 className="title">Section Title</h1>
-          <p>This content is centered and has a maximum width.</p>
+          <h1>This content is centered and has a maximum width.</h1>
         </div>
         <span>
           <br />
@@ -43,7 +43,7 @@ export function App() {
             Usage: Use columns inside sections or containers to 
             organize content into multiple columns. */}
         <div className="container">
-          <p className="title">Title of column </p>
+          <h1 className="title">Title of column </h1>
           <div className="columns">
             <div className="column">
               <div className="box">Column 1</div>
@@ -68,20 +68,20 @@ export function App() {
         <nav className="level">
           <div className="level-item has-text-centered">
             <div>
-              <p className="heading">Tweets</p>
-              <p className="title">3,456</p>
+              <h1 className="heading">Tweets</h1>
+              <h1 className="title">3,456</h1>
             </div>
           </div>
           <div className="level-item has-text-centered">
             <div>
-              <p className="heading">Following</p>
-              <p className="title">123</p>
+              <h1 className="heading">Following</h1>
+              <h1 className="title">123</h1>
             </div>
           </div>
           <div className="level-item has-text-centered">
             <div>
-              <p className="heading">Followers</p>
-              <p className="title">456k</p>
+              <h1 className="heading">Followers</h1>
+              <h1 className="title">456k</h1>
             </div>
           </div>
         </nav>
@@ -92,20 +92,20 @@ export function App() {
         <div className="tile is-ancestor">
           <div className="tile is-parent">
             <article className="tile is-child box">
-              <p className="title">Tile 1</p>
-              <p className="subtitle">Subtitle</p>
+              <h1 className="title">Tile 1</h1>
+              <h1 className="subtitle">Subtitle</h1>
             </article>
           </div>
-          <div className="tile is-parent">
+          <div className="tile is-h1arent">
             <article className="tile is-child box">
-              <p className="title">Tile 2</p>
-              <p className="subtitle">Subtitle</p>
+              <h1 className="title">Tile 2</h1>
+              <h1 className="subtitle">Subtitle</h1>
             </article>
           </div>
-          <div className="tile is-parent">
+          <div className="tile is-h1arent">
             <article className="tile is-child box">
-              <p className="title">Tile 3</p>
-              <p className="subtitle">Subtitle</p>
+              <h1 className="title">Tile 3</h1>
+              <h1 className="subtitle">Subtitle</h1>
             </article>
           </div>
         </div>
@@ -122,12 +122,12 @@ export function App() {
         {/* 4. Level for Horizontal Content Distribution: Use the level component for simple horizontal alignment of items. */}
         <nav className="level">
           <div className="level-item has-text-centered">
-            <p className="title">123</p>
-            <p className="heading">Items</p>
+            <h1 className="title">123</h1>
+            <h1 className="heading">Items</h1>
           </div>
           <div className="level-item has-text-centered">
-            <p className="title">456</p>
-            <p className="heading">Followers</p>
+            <h1 className="title">456</h1>
+            <h1 className="heading">Followers</h1>
           </div>
         </nav>
       </section>

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 using BlockbusterMoviesFinal.Models;
+using TacoTuesday.Models;
 
 namespace BlockbusterMoviesFinal.Models
 {
@@ -20,6 +21,8 @@ namespace BlockbusterMoviesFinal.Models
 
         public DbSet<MovieClass> MovieClasses { get; set; }
         public DbSet<Review> Reviews { get; set; }
+
+        public DbSet<User> Users { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

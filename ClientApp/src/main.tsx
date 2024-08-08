@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOMClient from 'react-dom/client'
 import './index.scss'
 
 import { App } from './App'
@@ -34,12 +34,31 @@ const routingObject = createBrowserRouter([
   },
 ])
 
-ReactDOM.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={routingObject} />
-      {/* <App /> location before using react-query and router.*/}
-    </QueryClientProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
-)
+// Create a root and render the app. This update was done in order to satisfy React 18 update where "render" was deprecated.
+const container = document.getElementById('root')
+
+if (container) {
+  // Create a root and render the app if the container is not null! To avoid an error in rendering.
+  const root = ReactDOMClient.createRoot(container)
+  root.render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={routingObject} />
+      </QueryClientProvider>
+    </React.StrictMode>
+  )
+} else {
+  console.error(
+    'Root container not found. Unable to render the React application.'
+  )
+}
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <QueryClientProvider client={queryClient}>
+//       <RouterProvider router={routingObject} />
+//       {/* <App /> location before using react-query and router.*/}
+//     </QueryClientProvider>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// )

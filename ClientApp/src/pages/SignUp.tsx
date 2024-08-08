@@ -1,7 +1,53 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { APIError, NewUserType } from '../types'
+import { useMutation } from 'react-query'
+
+async function submitNewUser(newUser: NewUserType) {
+  const response = await fetch('/api/Users', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(newUser),
+  })
+  if (response.ok) {
+    return response.json()
+  } else {
+    throw await response.json()
+  }
+}
 
 export function SignUp() {
+  const history = useNavigate()
+
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const [newUser, setNewUser] = useState<NewUserType>({
+    fullName: '',
+    email: '',
+    password: '',
+  })
+
+  const createUserMutation = useMutation(
+    (newUser: NewUserType) => submitNewUser(newUser),
+    {
+      onSuccess: function () {
+        history('/')
+      },
+      onError: function (error: APIError) {
+        setErrorMessage(Object.values(error.errors).join('. '))
+      },
+    }
+  )
+
+  function handleStringFieldChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value
+    const fieldName = event.target.name
+
+    const updateUser = { ...newUser, [fieldName]: value }
+
+    setNewUser(updateUser)
+  }
+
   return (
     <>
       <div className="column is-half is-offset-one-quarter">
@@ -10,7 +56,14 @@ export function SignUp() {
           <Link to="*">Click to go back HOME</Link>
         </div>
         <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
-          <form action="#">
+          <form
+            onSubmit={(event) => {
+              event.preventDefault()
+
+              createUserMutation.mutate(newUser)
+            }}
+          >
+            {errorMessage ? <p>{errorMessage}</p> : null}
             <span className="has-text-link has-text-weight-semibold is-size-4">
               Sign Up To Join
             </span>
@@ -38,6 +91,17 @@ export function SignUp() {
               </span>
             </div>
 
+            {/* SDG style input!!!!! */}
+            <p className="form-input">
+              <label htmlFor="password">Password</label>
+              <input type="password" name="password" />
+              <input
+                type="password"
+                name="password"
+                value={newUser.password}
+                onChange={handleStringFieldChange}
+              />
+            </p>
             <div className="is-relative mb-6">
               <input
                 className="input py-6 has-background-link has-text-warning is-size-3"
@@ -58,7 +122,7 @@ export function SignUp() {
               </span>
             </label>
 
-            <button className="button" type="submit">
+            <button className="button" type="submit" value="Submit">
               Submit
             </button>
           </form>

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 using BlockbusterMoviesFinal.Models;
-using TacoTuesday.Models;
+
 
 namespace BlockbusterMoviesFinal.Models
 {

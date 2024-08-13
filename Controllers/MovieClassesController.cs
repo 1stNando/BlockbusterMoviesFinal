@@ -43,12 +43,15 @@ namespace BlockbusterMoviesFinal.Controllers
             if (filter == null)
             {
                 return await _context.MovieClasses.
-                OrderBy(row => row.Id).Include(movie => movie.Reviews).ToListAsync();
+                OrderBy(row => row.Id).
+                Include(movie => movie.Reviews).
+                ToListAsync();
             }
             else
             { // In addition we return the reviews associated with the movie. 
-                return await _context.MovieClasses.OrderBy(row => row.Id).
-                    Where(movie => movie.Title.ToLower().Contains(filter.ToLower())).
+                return await _context.MovieClasses.
+                    OrderBy(row => row.Id).
+                    Where(movie => movie.Title.ToLower().Contains(filter)).
                     Include(movie => movie.Reviews).
                     ToListAsync();
             }

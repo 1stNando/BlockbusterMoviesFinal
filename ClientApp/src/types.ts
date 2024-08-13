@@ -8,14 +8,6 @@ export type APIError = {
   type: string
 }
 
-export type MovieType = {
-  id?: number | undefined
-  director: string
-  genre: string
-  name: string
-  releaseDate: string
-}
-
 export type MovieClassType = {
   id?: number | undefined
   title: string

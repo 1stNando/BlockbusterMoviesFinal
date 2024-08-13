@@ -16,9 +16,8 @@ namespace BlockbusterMoviesFinal.Models
         private static bool LOG_SQL_STATEMENTS_IN_DEVELOPMENT = true;
 
         // Add database tables here!!!
-        public DbSet<Movie> Movies { get; set; }
-
         public DbSet<MovieClass> MovieClasses { get; set; }
+
         public DbSet<Review> Reviews { get; set; }
 
 

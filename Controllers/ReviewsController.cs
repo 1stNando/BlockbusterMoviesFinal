@@ -24,9 +24,26 @@ namespace BlockbusterMoviesFinal.Controllers
         [HttpPost]
         public async Task<ActionResult<Review>> PostReview(Review review)
         {
-            // Indicate to the database context we want to add this new record
-            _context.Reviews.Add(review);
-            await _context.SaveChangesAsync();
+            if (review == null)
+            {
+                return BadRequest("Review cannot be null.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                // Indicate to the database context we want to add this new record
+                _context.Reviews.Add(review);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error creating the review: {ex.Message}");
+            }
+
 
             // Return a response that indicates the object was created (status code `201`) and some additional
             // headers with details of the newly created object.

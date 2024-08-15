@@ -8,7 +8,8 @@ namespace BlockbusterMoviesFinal.Models
         public string Body { get; set; }
         public int Stars { get; set; }
         // Setting a default date for the CreatedAt and make its set method private so that it cannot be set via the API
-        public DateTime CreatedAt { get; private set; } = DateTime.Now;
+        public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+
 
 
         // Used by the database. Defines the one-to-one relation to MovieClass 

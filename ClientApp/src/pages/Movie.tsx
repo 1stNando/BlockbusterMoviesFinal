@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { MovieClassType, NewReviewType, ReviewType } from '../types'
+import { MovieClassType, ReviewType } from '../types'
 import { useMutation, useQuery } from 'react-query'
 import BBVLogo from '../images/BBVLogo.png'
 
@@ -64,7 +64,6 @@ export function Movie() {
   // }
 
   const [newReview, setNewReview] = useState<ReviewType>({
-    id: undefined,
     body: '',
     stars: 5,
     movieClassId: Number(id),
@@ -157,6 +156,67 @@ export function Movie() {
           </nav>
         </div>
         {/* //end of navbar Top part/////////////////////////////////////////////////////////// */}
+        <div>
+          <div>
+            <h1>TESTING REVIEW</h1>
+            <form
+              onSubmit={function (event) {
+                event.preventDefault()
+                createNewReview.mutate(newReview)
+              }}
+            ></form>
+            <textarea
+              className="form-control"
+              id="body"
+              aria-describedby="bodyHelp"
+              value={newReview.body}
+              onChange={handleNewReviewTextFieldChange}
+            />
+            <input
+              id="star-rating-1"
+              type="radio"
+              name="stars"
+              checked={newReview.stars === 1}
+              onChange={() => handleStarRadioButton(1)}
+            />
+            <input
+              id="star-rating-2"
+              type="radio"
+              name="stars"
+              checked={newReview.stars === 2}
+              onChange={() => handleStarRadioButton(2)}
+            />
+            <input
+              id="star-rating-3"
+              type="radio"
+              name="stars"
+              checked={newReview.stars === 3}
+              onChange={() => handleStarRadioButton(3)}
+            />
+            <input
+              id="star-rating-4"
+              type="radio"
+              name="stars"
+              checked={newReview.stars === 4}
+              onChange={() => handleStarRadioButton(4)}
+            />
+            <input
+              id="star-rating-5"
+              type="radio"
+              name="stars"
+              checked={newReview.stars === 5}
+              onChange={() => handleStarRadioButton(5)}
+            />
+            <label htmlFor="star-rating-5">5 stars</label>
+
+            <p>
+              <input type="submit" value="Submit" />
+            </p>
+
+            {/* //////////////// */}
+          </div>
+        </div>
+
         <div className="container">
           <section className="section">
             <div className="container">

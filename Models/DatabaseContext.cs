@@ -22,6 +22,12 @@ namespace BlockbusterMoviesFinal.Models
 
         public DbSet<User> Users { get; set; }
 
+        // Created a unique index on the Email column of the Users table. This avoids users having duplicate email addresses. 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasIndex(user => user.Email).IsUnique();
+        }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

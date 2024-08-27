@@ -4,9 +4,18 @@ import BBVLogo from '../images/BBVLogo.png'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { MovieClassType } from '../types'
+import { getUser, isLoggedIn, logout } from '../auth'
 
 export function Movies() {
-  //NOTE: In this code const { data: movies2 = [] } = we are destructuring the return of react-query to get the data property and renaming it movies2. This will fetch the list of movies. Using react-query library to integrate with our backend API.
+  const user = getUser()
+
+  function handleLogout() {
+    logout()
+
+    window.location.assign('/')
+  }
+
+  // In this code const { data: movies2 = [] } = we are destructuring the return of react-query to get the data property and renaming it movies2. This will fetch the list of movies. Using react-query library to integrate with our backend API.
 
   const { data: movies2 = [] } = useQuery<MovieClassType[]>(
     ['movies2'],
@@ -47,7 +56,8 @@ export function Movies() {
             </div>
           </div>
           <div className="hero-foot ml-5">
-            Please feel free to add your favorite movie to our database!
+            {isLoggedIn() ? <p>Welcome back, {user.fullName}!</p> : null} Add
+            your favorite movie to our database!
           </div>
         </div>
       </section>
@@ -59,28 +69,45 @@ export function Movies() {
             <div className="container">
               <div id="navbarMenuHeroA" className="navbar-menu">
                 <div className="navbar-end">
-                  <p className="navbar-item is-active has-text-white">
-                    <Link className="is-active has-text-primary" to="*">
-                      Home
-                    </Link>
-                  </p>
-                  <Link className="navbar-item has-text-white" to="/signup">
-                    {' '}
-                    Sign Up
+                  <Link className="navbar-item has-text-white" to="*">
+                    Home
                   </Link>
-                  <a className="navbar-item has-text-white">Documentation</a>
+
+                  {isLoggedIn() ? null : (
+                    <Link className="navbar-item has-text-white" to="/signin">
+                      Sign In
+                    </Link>
+                  )}
+
+                  {isLoggedIn() ? null : (
+                    <Link className="navbar-item has-text-white" to="/signup">
+                      {' '}
+                      Sign Up
+                    </Link>
+                  )}
 
                   <Link className="navbar-item has-text-white" to="/new">
                     ADD A MOVIE
                   </Link>
-                  <span className="navbar-item">
-                    <a className="button is-primary is-inverted">
-                      <span className="icon">
-                        <i className="fab fa-github"></i>
-                      </span>
-                      <span>Download</span>
-                    </a>
-                  </span>
+
+                  {isLoggedIn() ? (
+                    <span className="navbar-item">
+                      <a
+                        href="/"
+                        className="button is-primary is-inverted"
+                        onClick={function (event) {
+                          event.preventDefault()
+                          handleLogout()
+                        }}
+                      >
+                        <span className="icon">
+                          <i className="fab fa-github"></i>
+                        </span>
+                        <span>Log Out</span>
+                      </a>
+                    </span>
+                  ) : null}
+
                   <span className="navbar-item">
                     {/* Search input for table */}
                     <form className="search">

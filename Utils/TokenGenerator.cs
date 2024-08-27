@@ -6,6 +6,8 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 
+
+// This code is part of our "template" to create a new program. SDG wrote this.  
 namespace BlockbusterMoviesFinal.Utils
 {
     public class TokenGenerator

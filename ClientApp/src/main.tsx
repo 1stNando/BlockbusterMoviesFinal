@@ -9,6 +9,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { NewMovie } from './pages/AddNewMovie'
 import { SignUp } from './pages/SignUp'
 import { Movie } from './pages/Movie'
+import { SignIn } from './pages/SignIn'
 //import { SingleMovieClassFromList } from './components/SingleMovieClassFromList'
 
 //react-query library configuration
@@ -23,6 +24,10 @@ const routingObject = createBrowserRouter([
   {
     path: '/signup',
     element: <SignUp />,
+  },
+  {
+    path: 'signin',
+    element: <SignIn />,
   },
   {
     path: '/new',

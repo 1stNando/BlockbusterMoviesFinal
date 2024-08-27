@@ -25,6 +25,7 @@ namespace BlockbusterMoviesFinal.Models
         // Created a unique index on the Email column of the Users table. This avoids users having duplicate email addresses. 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // When configuring the User, make sure emails are unique.
             modelBuilder.Entity<User>().HasIndex(user => user.Email).IsUnique();
         }
 

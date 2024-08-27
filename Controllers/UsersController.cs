@@ -27,6 +27,7 @@ namespace BlockbusterMoviesFinal.Controllers
             _context = context;
         }
 
+        // Creates a new user. 
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
@@ -43,7 +44,7 @@ namespace BlockbusterMoviesFinal.Controllers
                 var response = new
                 {
                     status = 400,
-                    errors = new List<string>() { "This account already exists with this email!" }
+                    errors = new List<string>() { "A user already exists with this email!" }
                 };
 
                 return BadRequest(response);

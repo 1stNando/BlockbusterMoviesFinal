@@ -3,6 +3,7 @@ import { APIError, MovieClassType } from '../types'
 import { useMutation } from 'react-query'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { authHeader } from '../auth'
 
 export function NewMovie() {
   // This is the id used to fetch the data for one Movie
@@ -39,7 +40,10 @@ export function NewMovie() {
   async function submitNewMovie(movieToCreate: MovieClassType) {
     const response = await fetch('/api/movieclasses', {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        'content-type': 'application/json',
+        Authorization: authHeader(),
+      },
       body: JSON.stringify(movieToCreate),
     })
 

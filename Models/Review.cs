@@ -17,5 +17,11 @@ namespace BlockbusterMoviesFinal.Models
 
         // Used by EntityFramework/LINQ
         public MovieClass MovieClass { get; set; }
+
+        // Adds the database column for the associated user
+        public int UserId { get; set; }
+
+        // Object associated with a user model
+        public User User { get; set; }
     }
 }

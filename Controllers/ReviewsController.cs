@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using BlockbusterMoviesFinal.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace BlockbusterMoviesFinal.Controllers
 {
@@ -22,8 +24,12 @@ namespace BlockbusterMoviesFinal.Controllers
 
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Review>> PostReview(Review review)
         {
+            // Security step to ensure what user id is being sent from the client. 
+            review.UserId = GetCurrentUserId();
+
             if (review == null)
             {
                 return BadRequest("Review cannot be null.");
@@ -50,7 +56,12 @@ namespace BlockbusterMoviesFinal.Controllers
             return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
 
-
+        // Private helper method to get the JWT claim related to the use Id for posting reviews. 
+        private int GetCurrentUserId()
+        {
+            // Get the User Id from the claim(payload of bearer) and parse it from a string to integer.
+            return int.Parse(User.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+        }
 
     }
 }

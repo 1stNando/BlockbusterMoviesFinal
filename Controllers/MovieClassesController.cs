@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BlockbusterMoviesFinal.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace BlockbusterMoviesFinal.Controllers
 {
@@ -17,6 +19,8 @@ namespace BlockbusterMoviesFinal.Controllers
     [ApiController]
     public class MovieClassesController : ControllerBase
     {
+
+
         // This is the variable you use to have access to your database
         private readonly DatabaseContext _context;
 
@@ -143,9 +147,14 @@ namespace BlockbusterMoviesFinal.Controllers
         // supplies to the names of the attributes of our MovieClass POCO class. This represents the
         // new values for the record.
         //
+
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<MovieClass>> PostMovieClass(MovieClass movieClass)
         {
+            // Security step: Set the UserID to the current user id to avoid malware event. 
+            movieClass.UserId = GetCurrentUserId();
+
             // Indicate to the database context we want to add this new record
             _context.MovieClasses.Add(movieClass);
             await _context.SaveChangesAsync();
@@ -186,6 +195,13 @@ namespace BlockbusterMoviesFinal.Controllers
         private bool MovieClassExists(int id)
         {
             return _context.MovieClasses.Any(movieClass => movieClass.Id == id);
+        }
+
+        // Private helper method to get the JWT claim related to the use Id for posting reviews. 
+        private int GetCurrentUserId()
+        {
+            // Get the User Id from the claim(payload of bearer) and parse it from a string to integer.
+            return int.Parse(User.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
         }
     }
 }

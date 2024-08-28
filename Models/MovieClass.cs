@@ -24,5 +24,11 @@ namespace BlockbusterMoviesFinal.Models
         // This property will allow us to navigate in code from a single restaurant to the list of associated reviews.
         public List<Review> Reviews { get; set; }
 
+        // Adds the database column for the associated user
+        public int UserId { get; set; }
+
+        // Object associated with a user model
+        public User User { get; set; }
+
     }
 }

@@ -5,6 +5,7 @@ import { useMutation, useQuery } from 'react-query'
 import BBVLogo from '../images/BBVLogo.png'
 
 import { formatDate } from 'date-fns'
+import { authHeader, isLoggedIn } from '../auth'
 
 // Page representing one movie view. Uses the {id} to fetch corresponding data. http://localhost:5000/movieclasses/35
 
@@ -26,7 +27,10 @@ async function loadOneMovie(id: string | undefined) {
 async function submitNewReview(review: ReviewType) {
   const response = await fetch(`/api/Reviews`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      Authorization: authHeader(),
+    },
     body: JSON.stringify(review),
   })
 
@@ -152,148 +156,151 @@ export function Movie() {
             <div className="container">
               <div className="column is-half is-offset-one-quarter">
                 <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
-                  <form
-                    onSubmit={function (event) {
-                      event.preventDefault()
-                      createNewReview.mutate(newReview)
-                    }}
-                  >
-                    <span className="has-text-link has-text-weight-semibold is-size-4">
-                      Viewing detailed information
+                  <span className="has-text-link has-text-weight-semibold is-size-4">
+                    Viewing detailed information
+                  </span>
+                  <h3 className="title is-4 mt-4 mb-1">
+                    Movie title: {movie.title}
+                  </h3>
+
+                  <div className="is-relative mb-6">
+                    <div className="input py-6 has-background-link has-text-warning is-size-3">
+                      {movie.director}
+                    </div>
+                    <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                      Director
                     </span>
-                    <h3 className="title is-4 mt-4 mb-1">
-                      Movie title: {movie.title}
-                    </h3>
+                  </div>
 
-                    <div className="is-relative mb-6">
-                      <div className="input py-6 has-background-link has-text-warning is-size-3">
-                        {movie.director}
-                      </div>
-                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                        Director
-                      </span>
+                  <div className="is-relative mb-6 ">
+                    <div className="input py-6 has-background-link has-text-warning is-size-3">
+                      {movie.genre}
                     </div>
+                    <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                      Genre
+                    </span>
+                  </div>
 
-                    <div className="is-relative mb-6 ">
-                      <div className="input py-6 has-background-link has-text-warning is-size-3">
-                        {movie.genre}
-                      </div>
-                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                        Genre
-                      </span>
+                  <div className="is-relative mb-6 ">
+                    <div className="input py-6 has-background-link has-text-warning is-size-3">
+                      {movie.releaseDate}
                     </div>
+                    <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                      Release date
+                    </span>
+                  </div>
 
-                    <div className="is-relative mb-6 ">
-                      <div className="input py-6 has-background-link has-text-warning is-size-3">
-                        {movie.releaseDate}
-                      </div>
-                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                        Release date
-                      </span>
+                  <div className="is-relative mb-6 ">
+                    <div className="input py-6 has-background-link has-text-warning is-size-3">
+                      {movie.reviews.length}
                     </div>
+                    <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                      Number of reviews
+                    </span>
+                  </div>
 
-                    <div className="is-relative mb-6 ">
-                      <div className="input py-6 has-background-link has-text-warning is-size-3">
-                        {movie.reviews.length}
-                      </div>
-                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                        Number of reviews
-                      </span>
+                  <div className="is-relative mb-6">
+                    <div className="py-6 has-background-link has-text-warning is-size-3">
+                      <h1 className="title">
+                        Latest reviews for {movie.title}
+                      </h1>
+
+                      <ul className="reviews">
+                        {movie.reviews.slice(-3).map((review) => (
+                          <li key={review.id}>
+                            <div className="box body py-6 has-background-link has-text-warning is-size-3">
+                              <h1>{review.body}</h1>
+                            </div>
+
+                            <time>
+                              {review.createdAt
+                                ? formatDate(
+                                    new Date(review.createdAt),
+                                    dateFormat
+                                  )
+                                : null}
+                            </time>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
+                  </div>
 
-                    <div className="is-relative mb-6">
-                      <div className="py-6 has-background-link has-text-warning is-size-3">
-                        <h1 className="title">Reviews for {movie.title}</h1>
-
-                        <ul className="reviews">
-                          {movie.reviews.slice(-3).map((review) => (
-                            <li key={review.id}>
-                              <div className="box body py-6 has-background-link has-text-warning is-size-3">
-                                <h1>{review.body}</h1>
+                  {isLoggedIn() ? (
+                    <>
+                      <form
+                        onSubmit={function (event) {
+                          event.preventDefault()
+                          createNewReview.mutate(newReview)
+                        }}
+                      >
+                        <div className="is-relative mb-3 ">
+                          <div>
+                            <div className="is-relative">
+                              <h1 className="title is-4 mt-4 mb-1">
+                                Add a new review to our database
+                              </h1>
+                              <div className="form-input">
+                                <textarea
+                                  name="body"
+                                  className="textarea has-background-link has-text-warning"
+                                  value={newReview.body}
+                                  onChange={handleNewReviewTextFieldChange}
+                                  style={{ fontSize: '1.5rem', width: '100%' }}
+                                ></textarea>
+                                <input
+                                  id="star-rating-1"
+                                  type="radio"
+                                  name="stars"
+                                  checked={newReview.stars === 1}
+                                  onChange={() => handleStarRadioButton(1)}
+                                />
+                                <input
+                                  id="star-rating-2"
+                                  type="radio"
+                                  name="stars"
+                                  checked={newReview.stars === 2}
+                                  onChange={() => handleStarRadioButton(2)}
+                                />
+                                <input
+                                  id="star-rating-3"
+                                  type="radio"
+                                  name="stars"
+                                  checked={newReview.stars === 3}
+                                  onChange={() => handleStarRadioButton(3)}
+                                />
+                                <input
+                                  id="star-rating-4"
+                                  type="radio"
+                                  name="stars"
+                                  checked={newReview.stars === 4}
+                                  onChange={() => handleStarRadioButton(4)}
+                                />
+                                <input
+                                  id="star-rating-5"
+                                  type="radio"
+                                  name="stars"
+                                  checked={newReview.stars === 5}
+                                  onChange={() => handleStarRadioButton(5)}
+                                />
                               </div>
-
-                              <time>
-                                {review.createdAt
-                                  ? formatDate(
-                                      new Date(review.createdAt),
-                                      dateFormat
-                                    )
-                                  : null}
-                              </time>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <span className="is-absolute is-top-0 is-left-0 -mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                        Latest reviews
-                      </span>
-                    </div>
-
-                    <div className="is-relative mb-3 ">
-                      <div>
-                        <div className="is-relative">
-                          <h1 className="title is-4 mt-4 mb-1">
-                            Add a new review to our database
-                          </h1>
-                          <div className="form-input">
-                            <textarea
-                              name="body"
-                              className="textarea has-background-link has-text-warning"
-                              value={newReview.body}
-                              onChange={handleNewReviewTextFieldChange}
-                              style={{ fontSize: '1.5rem', width: '100%' }}
-                            ></textarea>
-                            <input
-                              id="star-rating-1"
-                              type="radio"
-                              name="stars"
-                              checked={newReview.stars === 1}
-                              onChange={() => handleStarRadioButton(1)}
-                            />
-                            <input
-                              id="star-rating-2"
-                              type="radio"
-                              name="stars"
-                              checked={newReview.stars === 2}
-                              onChange={() => handleStarRadioButton(2)}
-                            />
-                            <input
-                              id="star-rating-3"
-                              type="radio"
-                              name="stars"
-                              checked={newReview.stars === 3}
-                              onChange={() => handleStarRadioButton(3)}
-                            />
-                            <input
-                              id="star-rating-4"
-                              type="radio"
-                              name="stars"
-                              checked={newReview.stars === 4}
-                              onChange={() => handleStarRadioButton(4)}
-                            />
-                            <input
-                              id="star-rating-5"
-                              type="radio"
-                              name="stars"
-                              checked={newReview.stars === 5}
-                              onChange={() => handleStarRadioButton(5)}
-                            />
+                            </div>
+                            <span className="is-absolute is-top-0 is-left-0 mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
+                              Leave a review!
+                            </span>
                           </div>
                         </div>
-                        <span className="is-absolute is-top-0 is-left-0 mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">
-                          Leave a review!
-                        </span>
-                      </div>
-                    </div>
 
-                    <div>
-                      <input
-                        className="button mt-5 py-7 has-background-link has-text-warning is-size-4"
-                        type="submit"
-                        value="Submit"
-                      />
-                    </div>
-                  </form>
+                        <div>
+                          <input
+                            className="button mt-5 py-7 has-background-link has-text-warning is-size-4"
+                            type="submit"
+                            value="Submit"
+                          />
+                        </div>
+                      </form>
+                    </>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -304,7 +311,9 @@ export function Movie() {
         {/* Hero content: will be in the middle */}
         <div className="hero-body mb-0 py-5">
           <div className="container has-text-centered">
-            <p className="title is-size-3">Please Join!</p>
+            <p className="title is-size-3">
+              Please sign up to leave your own review!
+            </p>
             <p className="subtitle">Thank you for visiting this website</p>
           </div>
         </div>

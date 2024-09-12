@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { MovieClassType, ReviewType } from '../types'
+import { MovieClassType, NewReviewType } from '../types'
 import { useMutation, useQuery } from 'react-query'
 import BBVLogo from '../images/BBVLogo.png'
 
@@ -24,7 +24,7 @@ async function loadOneMovie(id: string | undefined) {
 }
 
 // handle submitting form for review
-async function submitNewReview(review: ReviewType) {
+async function submitNewReview(review: NewReviewType) {
   const response = await fetch(`/api/Reviews`, {
     method: 'POST',
     headers: {
@@ -67,9 +67,11 @@ export function Movie() {
   //   return null
   // }
 
-  const [newReview, setNewReview] = useState<ReviewType>({
+  const [newReview, setNewReview] = useState<NewReviewType>({
+    id: undefined,
     body: '',
     stars: 5,
+    createdAt: new Date(),
     movieClassId: Number(id),
   })
 
@@ -210,8 +212,8 @@ export function Movie() {
                           <li key={review.id}>
                             <div className="box body py-6 has-background-link has-text-warning is-size-3">
                               <h1>{review.body}</h1>
+                              <h2>Written by user: {review.user.fullName}</h2>
                             </div>
-
                             <time>
                               {review.createdAt
                                 ? formatDate(

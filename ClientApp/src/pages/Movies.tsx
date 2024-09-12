@@ -103,7 +103,7 @@ export function Movies() {
                         <span className="icon">
                           <i className="fab fa-github"></i>
                         </span>
-                        <span>Log Out</span>
+                        <span>Sign Out</span>
                       </a>
                     </span>
                   ) : null}

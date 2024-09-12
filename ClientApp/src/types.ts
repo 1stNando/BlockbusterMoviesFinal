@@ -24,6 +24,19 @@ export type ReviewType = {
   stars: number
   createdAt?: string
   movieClassId: number
+  user: {
+    id: number
+    fullName: string
+    email: string
+  }
+}
+
+export type NewReviewType = {
+  id: number | undefined
+  body: string
+  stars: number
+  createdAt: Date
+  movieClassId: number
 }
 
 export type NewUserType = {

@@ -13,6 +13,29 @@ import { authHeader, isLoggedIn } from '../auth'
 //   review: ReviewType
 // }
 
+// Stars component
+// export function Stars({ movie }: { movie: MovieClassType }) {
+//   const totalStars = movie.reviews.reduce(
+//     (starRatingSum, review) => starRatingSum + review.stars,
+//     0
+//   )
+
+//   const averageStars =
+//     movie.reviews.length === 0 ? 0 : totalStars / movie.reviews.length
+
+//   const averageStarsToOneDecimalPlace = Number(averageStars.toFixed(1))
+
+//   return (
+//     <span
+//       className="stars"
+//       style={
+//         { '--rating': averageStarsToOneDecimalPlace } as CSSStarsProperties
+//       }
+//       aria-label={`Star rating of this movie is ${averageStarsToOneDecimalPlace} out of 5.`}
+//     ></span>
+//   )
+// }
+
 async function loadOneMovie(id: string | undefined) {
   const response = await fetch(`/api/movieclasses/${id}`)
 

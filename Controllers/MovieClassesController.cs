@@ -73,6 +73,7 @@ namespace BlockbusterMoviesFinal.Controllers
             // Find the movieClass in the database using `FindAsync` to look it up by id
             var movieClass = await _context.MovieClasses.
                 Include(movie => movie.Reviews).
+                // This line pulls up the information about review.user.fullName
                 ThenInclude(review => review.User).
                 Where(movie => movie.Id == id).
                 FirstOrDefaultAsync();

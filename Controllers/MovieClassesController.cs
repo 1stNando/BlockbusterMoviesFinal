@@ -173,6 +173,7 @@ namespace BlockbusterMoviesFinal.Controllers
         // to grab the id from the URL. It is then made available to us as the `id` argument to the method.
         //
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteMovieClass(int id)
         {
             // Find this movieClass by looking for the specific id
@@ -183,14 +184,25 @@ namespace BlockbusterMoviesFinal.Controllers
                 return NotFound();
             }
 
+            // code for deleting a movie
+            if (movieClass.UserId != GetCurrentUserId())
+            {
+                // make a custom error response
+                var response = new
+                {
+                    status = 401,
+                    errors = new List<string>() { "Not authorized" }
+                };
+                return Unauthorized(response);
+            }
+
             // Tell the database we want to remove this record
             _context.MovieClasses.Remove(movieClass);
 
             // Tell the database to perform the deletion
             await _context.SaveChangesAsync();
 
-            // Return a copy of the deleted data
-            return Ok(movieClass);
+            return NoContent();
         }
 
         // Private helper method that looks up an existing movieClass by the supplied id

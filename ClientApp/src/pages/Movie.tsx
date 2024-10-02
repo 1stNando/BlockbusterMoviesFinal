@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { MovieClassType, NewReviewType } from '../types'
 import { useMutation, useQuery } from 'react-query'
 import BBVLogo from '../images/BBVLogo.png'
 
 import { formatDate } from 'date-fns'
-import { authHeader, isLoggedIn } from '../auth'
+import { authHeader, getUserId, isLoggedIn } from '../auth'
 
 // Page representing one movie view. Uses the {id} to fetch corresponding data. http://localhost:5000/movieclasses/35
 
@@ -36,7 +36,7 @@ import { authHeader, isLoggedIn } from '../auth'
 //   )
 // }
 
-async function loadOneMovie(id: string | undefined) {
+async function loadOneMovie(id: string | number | undefined) {
   const response = await fetch(`/api/movieclasses/${id}`)
 
   if (response.ok) {
@@ -46,9 +46,9 @@ async function loadOneMovie(id: string | undefined) {
   }
 }
 
-// handle submitting form for review
+// Takes a review object and submits it to the API. Returns a promise of the JSON response
 async function submitNewReview(review: NewReviewType) {
-  const response = await fetch(`/api/Reviews`, {
+  const response = await fetch(`/api/reviews`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -64,31 +64,65 @@ async function submitNewReview(review: NewReviewType) {
   }
 }
 
-// Represent the default value of our object when there is no data being returned from react query. Null object pattern rather than guard clause. Handles the case where the object is missing while waiting for the real data to be returned.
-const NullMovie: MovieClassType = {
-  id: undefined,
-  title: '',
-  genre: '',
-  director: '',
-  releaseDate: '',
-  reviews: [],
-}
-
 export function Movie() {
+  const history = useNavigate()
+
+  //const params = useParams()
+  //const id = Number(params.id)
+  //const user = getUser()
+
+  // Sept.30
+  // const { refetch: reloadMovie, data: movie = NullMovie } =
+  //   useQuery<MovieClassType>(['one-movie', id], () => loadOneMovie(id))
+
+  // async function handleDeleteReview(event, reviewId) {
+  //   event.preventDefault()
+
+  //   await fetch(`/api/Reviews/${reviewId}`, {
+  //     method: 'DELETE',
+  //     headers: { 'content-type': 'application/json', ...authHeader() },
+  //   })
+  //   fetchMovie()
+  // }
+
+  // Represent the default value of our object when there is no data being returned from react query. Null object pattern rather than guard clause. Handles the case where the object is missing while waiting for the real data to be returned.
+  const NullMovie: MovieClassType = {
+    id: undefined,
+    userId: 0,
+    title: '',
+    genre: '',
+    director: '',
+    releaseDate: '',
+    reviews: [],
+  }
+
+  async function handleDelete(id: number | undefined) {
+    if (id === undefined) {
+      return
+    }
+
+    const response = await fetch(`/api/movieclasses/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+        Authorization: authHeader(),
+      },
+    })
+
+    if (response.ok) {
+      return response.json()
+    } else {
+      throw await response.json()
+    }
+  }
+
   // Date format needed to post a review correctly.
   const dateFormat = `EEEE, MMMM do, yyyy 'at' h:mm aaa`
 
   // React router needed to find id of movie.
-  const { id } = useParams<{ id: string }>()
+  // const { id } = useParams<{ id: string }>()
 
-  const { refetch, data: movie = NullMovie } = useQuery<MovieClassType>(
-    ['one-movie', id],
-    () => loadOneMovie(id)
-  )
-  //Guard clause approach, as opposed to null object pattern.
-  // if (movie === undefined) {
-  //   return null
-  // }
+  const { id } = useParams<{ id: string }>()
 
   const [newReview, setNewReview] = useState<NewReviewType>({
     id: undefined,
@@ -98,14 +132,35 @@ export function Movie() {
     movieClassId: Number(id),
   })
 
+  const { refetch: reloadMovie, data: movie = NullMovie } =
+    useQuery<MovieClassType>(['one-movie', id], () => loadOneMovie(id))
+  //Guard clause approach, as opposed to null object pattern.
+  // if (movie === undefined) {
+  //   return null
+  // }
+
   const createNewReview = useMutation(submitNewReview, {
     onSuccess: function () {
-      refetch()
+      reloadMovie()
+
+      // Clear out the review
       setNewReview({
         ...newReview,
         body: '',
         stars: 5,
+        createdAt: new Date(),
       })
+    },
+  })
+
+  // Sept.30
+  const deleteMovie = useMutation(handleDelete, {
+    onSuccess: function () {
+      history('/')
+    },
+    onError: function () {
+      // TODO: make a better error handling here
+      console.log('oops, an error occured when trying to delete a movie.')
     },
   })
 
@@ -181,6 +236,32 @@ export function Movie() {
             <div className="container">
               <div className="column is-half is-offset-one-quarter">
                 <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
+                  {/* //////////////////////////////// */}
+                  {movie.userId === getUserId() ? (
+                    <button
+                      onClick={function (event) {
+                        event.preventDefault()
+
+                        deleteMovie.mutate(movie.id)
+                      }}
+                    >
+                      Delete your Movie!
+                    </button>
+                  ) : null}
+
+                  {/* {movie.userId === getUserId() ? (
+                    <button onClick={() => handleDelete(movie.id)}>
+                      Delete this movie!!!
+                    </button>
+                  ) : null} */}
+
+                  {/* {isLoggedIn() && movie.userId === user.id && (
+                    <p>
+                      <button onClick={() => handleDelete(movie.id)}>
+                        Delete this movie button!
+                      </button>
+                    </p>
+                  )} */}
                   <span className="has-text-link has-text-weight-semibold is-size-4">
                     Viewing detailed information
                   </span>

@@ -178,13 +178,15 @@ namespace BlockbusterMoviesFinal.Controllers
         {
             // Find this movieClass by looking for the specific id
             var movieClass = await _context.MovieClasses.FindAsync(id);
+            // Security to ensure the user is actually the current user. 
+            //var movieClass = await _context.MovieClasses.Where(movie => movie.UserId == GetCurrentUserId()).FirstOrDefaultAsync();
             if (movieClass == null)
             {
                 // There wasn't a movieClass with that id so return a `404` not found
                 return NotFound();
             }
 
-            // code for deleting a movie
+            // For security, this ensures a movie can only be deleted only by the user who created it. 
             if (movieClass.UserId != GetCurrentUserId())
             {
                 // make a custom error response
@@ -202,7 +204,8 @@ namespace BlockbusterMoviesFinal.Controllers
             // Tell the database to perform the deletion
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            // Return a copy of the deleted data
+            return Ok(movieClass);
         }
 
         // Private helper method that looks up an existing movieClass by the supplied id

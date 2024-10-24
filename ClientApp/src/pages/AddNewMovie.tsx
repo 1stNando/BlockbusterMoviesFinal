@@ -15,6 +15,7 @@ export function NewMovie() {
   // This allows the form for a new movie to be interpreted from the user input.
   const [newMovie, setNewMovie] = useState<MovieClassType>({
     id: undefined,
+    userId: undefined,
     director: '',
     genre: '',
     title: '',

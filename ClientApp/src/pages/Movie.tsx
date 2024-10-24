@@ -9,33 +9,6 @@ import { authHeader, getUserId, isLoggedIn } from '../auth'
 
 // Page representing one movie view. Uses the {id} to fetch corresponding data. http://localhost:5000/movieclasses/35
 
-// type ReviewsFromMovieProps = {
-//   review: ReviewType
-// }
-
-// Stars component
-// export function Stars({ movie }: { movie: MovieClassType }) {
-//   const totalStars = movie.reviews.reduce(
-//     (starRatingSum, review) => starRatingSum + review.stars,
-//     0
-//   )
-
-//   const averageStars =
-//     movie.reviews.length === 0 ? 0 : totalStars / movie.reviews.length
-
-//   const averageStarsToOneDecimalPlace = Number(averageStars.toFixed(1))
-
-//   return (
-//     <span
-//       className="stars"
-//       style={
-//         { '--rating': averageStarsToOneDecimalPlace } as CSSStarsProperties
-//       }
-//       aria-label={`Star rating of this movie is ${averageStarsToOneDecimalPlace} out of 5.`}
-//     ></span>
-//   )
-// }
-
 async function loadOneMovie(id: string | number | undefined) {
   const response = await fetch(`/api/movieclasses/${id}`)
 
@@ -67,23 +40,14 @@ async function submitNewReview(review: NewReviewType) {
 export function Movie() {
   const history = useNavigate()
 
-  //const params = useParams()
-  //const id = Number(params.id)
-  //const user = getUser()
+  // const [movie, setMovie] = useState({
+  //   title: '',
+  //   genre: '',
+  //   director: '',
+  //   releaseDate: '',
 
-  // Sept.30
-  // const { refetch: reloadMovie, data: movie = NullMovie } =
-  //   useQuery<MovieClassType>(['one-movie', id], () => loadOneMovie(id))
-
-  // async function handleDeleteReview(event, reviewId) {
-  //   event.preventDefault()
-
-  //   await fetch(`/api/Reviews/${reviewId}`, {
-  //     method: 'DELETE',
-  //     headers: { 'content-type': 'application/json', ...authHeader() },
-  //   })
-  //   fetchMovie()
-  // }
+  //   reviews: []
+  // })
 
   // Represent the default value of our object when there is no data being returned from react query. Null object pattern rather than guard clause. Handles the case where the object is missing while waiting for the real data to be returned.
   const NullMovie: MovieClassType = {
@@ -173,10 +137,6 @@ export function Movie() {
     setNewReview({ ...newReview, [name]: value })
   }
 
-  function handleStarRadioButton(newStars: number) {
-    setNewReview({ ...newReview, stars: newStars })
-  }
-
   return (
     <>
       <section className="hero is-small">
@@ -249,19 +209,6 @@ export function Movie() {
                     </button>
                   ) : null}
 
-                  {/* {movie.userId === getUserId() ? (
-                    <button onClick={() => handleDelete(movie.id)}>
-                      Delete this movie!!!
-                    </button>
-                  ) : null} */}
-
-                  {/* {isLoggedIn() && movie.userId === user.id && (
-                    <p>
-                      <button onClick={() => handleDelete(movie.id)}>
-                        Delete this movie button!
-                      </button>
-                    </p>
-                  )} */}
                   <span className="has-text-link has-text-weight-semibold is-size-4">
                     Viewing detailed information
                   </span>
@@ -314,7 +261,7 @@ export function Movie() {
                       <ul className="reviews">
                         {movie.reviews.slice(-3).map((review) => (
                           <li key={review.id}>
-                            <div className="box body py-6 has-background-link has-text-warning is-size-3">
+                            <div className="box py-6 has-background-link has-text-warning is-size-3">
                               <h1>{review.body}</h1>
                               <h2>Written by user: {review.user.fullName}</h2>
                             </div>
@@ -354,41 +301,6 @@ export function Movie() {
                                   onChange={handleNewReviewTextFieldChange}
                                   style={{ fontSize: '1.5rem', width: '100%' }}
                                 ></textarea>
-                                <input
-                                  id="star-rating-1"
-                                  type="radio"
-                                  name="stars"
-                                  checked={newReview.stars === 1}
-                                  onChange={() => handleStarRadioButton(1)}
-                                />
-                                <input
-                                  id="star-rating-2"
-                                  type="radio"
-                                  name="stars"
-                                  checked={newReview.stars === 2}
-                                  onChange={() => handleStarRadioButton(2)}
-                                />
-                                <input
-                                  id="star-rating-3"
-                                  type="radio"
-                                  name="stars"
-                                  checked={newReview.stars === 3}
-                                  onChange={() => handleStarRadioButton(3)}
-                                />
-                                <input
-                                  id="star-rating-4"
-                                  type="radio"
-                                  name="stars"
-                                  checked={newReview.stars === 4}
-                                  onChange={() => handleStarRadioButton(4)}
-                                />
-                                <input
-                                  id="star-rating-5"
-                                  type="radio"
-                                  name="stars"
-                                  checked={newReview.stars === 5}
-                                  onChange={() => handleStarRadioButton(5)}
-                                />
                               </div>
                             </div>
                             <span className="is-absolute is-top-0 is-left-0 mt-2 ml-3 has-background-warning has-text-grey-dark is-size-7">

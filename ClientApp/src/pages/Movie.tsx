@@ -195,20 +195,29 @@ export function Movie() {
           <section className="section">
             <div className="container">
               <div className="column is-half is-offset-one-quarter">
-                <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
+                <div className="buttons mt-6 mx-4 is-justify-content-space-between">
                   {/* //////////////////////////////// */}
                   {movie.userId === getUserId() ? (
-                    <button
-                      onClick={function (event) {
-                        event.preventDefault()
+                    <>
+                      <Link
+                        className="has-text-white"
+                        to={`/movieclasses/${movie.id}/edit`}
+                      >
+                        Update this here!
+                      </Link>
+                      <button
+                        onClick={function (event) {
+                          event.preventDefault()
 
-                        deleteMovie.mutate(movie.id)
-                      }}
-                    >
-                      Delete your Movie!
-                    </button>
+                          deleteMovie.mutate(movie.id)
+                        }}
+                      >
+                        Delete this here!
+                      </button>
+                    </>
                   ) : null}
-
+                </div>
+                <div className="box p-6 px-10-desktop py-12-desktop has-background-warning has-text-centered">
                   <span className="has-text-link has-text-weight-semibold is-size-4">
                     Viewing detailed information
                   </span>

@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { APIError, MovieClassType } from '../types'
-import { useMutation } from 'react-query'
-import { Link } from 'react-router-dom'
+import { useMutation, useQuery } from 'react-query'
+import { Link, useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { authHeader } from '../auth'
 
 // POST create a new movie API
-async function submitNewMovie(movieToCreate: MovieClassType) {
-  const response = await fetch('/api/movieclasses', {
-    method: 'POST',
+async function submitEditedMovie(movieToUpdate: MovieClassType) {
+  const response = await fetch(`/api/movieclasses/${movieToUpdate.id}`, {
+    method: 'PUT',
     headers: {
       'content-type': 'application/json',
       Authorization: authHeader(),
     },
-    body: JSON.stringify(movieToCreate),
+    body: JSON.stringify(movieToUpdate),
   })
 
   if (response.ok) {
@@ -23,15 +23,36 @@ async function submitNewMovie(movieToCreate: MovieClassType) {
   }
 }
 
-export function NewMovie() {
+async function loadOneMovie(id: string | undefined) {
+  const response = await fetch(`/api/movieclasses/${id}`)
+
+  if (response.ok) {
+    return response.json()
+  } else {
+    throw await response.json()
+  }
+}
+
+export function EditMovie() {
   // This is the id used to fetch the data for one Movie
   //const { id } = useParams<{ id: string }>()
 
   const history = useNavigate()
   const [errorMessage, setErrorMessage] = useState('')
 
+  const { id } = useParams<{ id: string }>()
+
+  // Use the query to load the existing movie
+  // and when we get something back, call setUpdatedMovie
+  // to update our state.
+  useQuery<MovieClassType>(['one-movie', id], () => loadOneMovie(id), {
+    onSuccess: function (movieBeingLoaded) {
+      setUpdatingMovie(movieBeingLoaded)
+    },
+  })
+
   // This allows the form for a new movie to be interpreted from the user input.
-  const [newMovie, setNewMovie] = useState<MovieClassType>({
+  const [updatingMovie, setUpdatingMovie] = useState<MovieClassType>({
     id: undefined,
     userId: undefined,
     director: '',
@@ -50,14 +71,14 @@ export function NewMovie() {
     const fieldName = event.target.name
 
     //spread operator... is used to integrate the new movie form submit to match the newMovie
-    const updateMovie = { ...newMovie, [fieldName]: value }
+    const updatedMovie = { ...updatingMovie, [fieldName]: value }
 
-    setNewMovie(updateMovie)
+    setUpdatingMovie(updatedMovie)
   }
 
   // React-query's mutation to send a POST request to add a Movie.
   //const createNewMovie = useMutation(submitNewMovie)
-  const createNewMovie = useMutation(submitNewMovie, {
+  const updateTheMovie = useMutation(submitEditedMovie, {
     onSuccess: function () {
       history('/')
     },
@@ -72,18 +93,19 @@ export function NewMovie() {
 
     // Date validation, this check is added to ensure the date is not in the future.
     const currentDate = new Date().toISOString().split('T')[0]
-    if (newMovie.releaseDate > currentDate) {
+    if (updatingMovie.releaseDate > currentDate) {
       setErrorMessage('The release date cannot be in the future.')
       return
     }
 
-    createNewMovie.mutate(newMovie)
+    updateTheMovie.mutate(updatingMovie)
   }
 
   return (
     <>
       <div className="container is-mobile is-centered">
         <div>
+          <a className="navbar-item is-active has-text-white">Home</a>
           <Link to="*">Click to go back HOME</Link>
         </div>
         <div className="column">
@@ -94,7 +116,7 @@ export function NewMovie() {
                   <p className="form-error is-warning">{errorMessage}</p>
                 ) : null}
                 <h1 className="title is-4 mt-4 mb-1">
-                  Add a new movie to the database
+                  Update the movie you created
                 </h1>
                 <div className="is-relative">
                   <div className="form-input">
@@ -105,7 +127,7 @@ export function NewMovie() {
                       className="input py-6 has-background-link has-text-warning is-size-3"
                       type="text"
                       name="director"
-                      value={newMovie.director}
+                      value={updatingMovie.director}
                       onChange={handleStringFieldChange}
                     />
                   </div>
@@ -119,7 +141,7 @@ export function NewMovie() {
                     className="input py-6 has-background-link has-text-warning is-size-3"
                     type="text"
                     name="genre"
-                    value={newMovie.genre}
+                    value={updatingMovie.genre}
                     onChange={handleStringFieldChange}
                   />
                 </div>
@@ -132,7 +154,7 @@ export function NewMovie() {
                       className="input py-6 has-background-link has-text-warning is-size-3"
                       type="text"
                       name="title"
-                      value={newMovie.title}
+                      value={updatingMovie.title}
                       onChange={handleStringFieldChange}
                     />
                   </div>
@@ -147,7 +169,7 @@ export function NewMovie() {
                     className="input py-6 has-background-link has-text-warning is-size-3"
                     type="date"
                     name="releaseDate"
-                    value={newMovie.releaseDate}
+                    value={updatingMovie.releaseDate}
                     onChange={handleStringFieldChange}
                   />
                 </div>

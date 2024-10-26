@@ -10,6 +10,7 @@ import { NewMovie } from './pages/AddNewMovie'
 import { SignUp } from './pages/SignUp'
 import { Movie } from './pages/Movie'
 import { SignIn } from './pages/SignIn'
+import { EditMovie } from './pages/EditMovie'
 //import { SingleMovieClassFromList } from './components/SingleMovieClassFromList'
 
 //react-query library configuration
@@ -36,6 +37,10 @@ const routingObject = createBrowserRouter([
   {
     path: '/movieclasses/:id',
     element: <Movie />,
+  },
+  {
+    path: '/movieclasses/:id/edit',
+    element: <EditMovie />,
   },
 ])
 

@@ -40,6 +40,12 @@ export type NewReviewType = {
   movieClassId: number
 }
 
+export type EditReviewType = {
+  id: number
+  body: string
+  movieClassId: number
+}
+
 export type NewUserType = {
   fullName: string
   email: string

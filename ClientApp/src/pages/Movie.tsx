@@ -203,7 +203,7 @@ export function Movie() {
                         className="has-text-white"
                         to={`/movieclasses/${movie.id}/edit`}
                       >
-                        Update this here!
+                        Update this movie here!
                       </Link>
                       <button
                         onClick={function (event) {
@@ -212,7 +212,7 @@ export function Movie() {
                           deleteMovie.mutate(movie.id)
                         }}
                       >
-                        Delete this here!
+                        Delete this movie here!
                       </button>
                     </>
                   ) : null}
@@ -282,6 +282,25 @@ export function Movie() {
                                   )
                                 : null}
                             </time>
+                            {movie.userId === getUserId() ? (
+                              <>
+                                <Link
+                                  className="has-text-white"
+                                  to={`/movieclasses/${movie.id}/editReview`}
+                                >
+                                  Update this review here!
+                                </Link>
+                                <button
+                                  onClick={function (event) {
+                                    event.preventDefault()
+
+                                    deleteMovie.mutate(movie.id)
+                                  }}
+                                >
+                                  Delete this review here!
+                                </button>
+                              </>
+                            ) : null}
                           </li>
                         ))}
                       </ul>

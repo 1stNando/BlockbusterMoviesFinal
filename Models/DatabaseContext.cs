@@ -3,8 +3,6 @@ using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-using BlockbusterMoviesFinal.Models;
-
 namespace BlockbusterMoviesFinal.Models
 {
     public partial class DatabaseContext : DbContext
@@ -22,17 +20,19 @@ namespace BlockbusterMoviesFinal.Models
 
         public DbSet<User> Users { get; set; }
 
-        // Created a unique index on the Email column of the Users table. This avoids users having duplicate email addresses. 
+        // Created a unique index on the Email column of the Users table. This avoids users having duplicate email addresses.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // When configuring the User, make sure emails are unique.
             modelBuilder.Entity<User>().HasIndex(user => user.Email).IsUnique();
         }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (LOG_SQL_STATEMENTS_IN_DEVELOPMENT && Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            if (
+                LOG_SQL_STATEMENTS_IN_DEVELOPMENT
+                && Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development"
+            )
             {
                 var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
                 optionsBuilder.UseLoggerFactory(loggerFactory);
@@ -41,9 +41,13 @@ namespace BlockbusterMoviesFinal.Models
             if (!optionsBuilder.IsConfigured)
             {
                 var databaseURL = Environment.GetEnvironmentVariable("DATABASE_URL");
-                var defaultConnectionString = $"server=localhost;database={DEVELOPMENT_DATABASE_NAME}";
+                var defaultConnectionString =
+                    $"server=localhost;database={DEVELOPMENT_DATABASE_NAME}";
 
-                var conn = databaseURL != null ? ConvertPostConnectionToConnectionString(databaseURL) : defaultConnectionString;
+                var conn =
+                    databaseURL != null
+                        ? ConvertPostConnectionToConnectionString(databaseURL)
+                        : defaultConnectionString;
 
                 optionsBuilder.UseNpgsql(conn);
             }

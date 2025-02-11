@@ -56,6 +56,8 @@ namespace BlockbusterMoviesFinal.Controllers
             return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
 
+
+
         // Private helper method to get the JWT claim related to the use Id for posting reviews. 
         private int GetCurrentUserId()
         {

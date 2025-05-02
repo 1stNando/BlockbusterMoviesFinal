@@ -56,7 +56,40 @@ namespace BlockbusterMoviesFinal.Controllers
             return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Review>> PutReview(int id, Review review)
+        {
+            if (id != review.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(review).State = EntityState.Modified;
 
+            try
+            {
+                // Try to save the changes.
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ReviewExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(review);
+        }
+
+        // Looks up existing review by the supplied id
+        private bool ReviewExists(int id)
+        {
+            return _context.Reviews.Any(review => review.Id == id);
+        }
 
         // Private helper method to get the JWT claim related to the use Id for posting reviews. 
         private int GetCurrentUserId()

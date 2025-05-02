@@ -43,7 +43,7 @@ export function EditMovie() {
   const { id } = useParams<{ id: string }>()
 
   // Use the query to load the existing movie
-  // and when we get something back, call setUpdatedMovie
+  // and when we get something back, call setUpdatingMovie
   // to update our state.
   useQuery<MovieClassType>(['one-movie', id], () => loadOneMovie(id), {
     onSuccess: function (movieBeingLoaded) {

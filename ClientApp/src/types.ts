@@ -33,17 +33,12 @@ export type ReviewType = {
 }
 
 export type NewReviewType = {
-  id: number | undefined
+  id?: number
+  userId: number | undefined
   body: string
-  stars: number
-  createdAt: Date
-  movieClassId: number
-}
-
-export type EditReviewType = {
-  id: number
-  body: string
-  movieClassId: number
+  stars: number | undefined
+  createdAt?: string
+  movieClassId: number | string
 }
 
 export type NewUserType = {
